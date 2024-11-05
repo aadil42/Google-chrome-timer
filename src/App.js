@@ -3,6 +3,7 @@ import Model from "./components/Model";
 import GradientDiv from "./components/GradientDiv";
 import MainTitle from "./components/MainTitle";
 import PrimaryBtn from "./components/PrimaryBtn";
+import HorizontalBar from "./components/HorizontalBar";
 
 import "./App.css";
 
@@ -25,9 +26,24 @@ function App() {
             paddingTop: '20px', 
           }}
           />
-          <PrimaryBtn 
-          title={CONST.PRIMARY_BTN_TITLE}
+          {/* <PrimaryBtn 
+              title={CONST.PRIMARY_BTN_CREATE_TIMER}
           />
+          <PrimaryBtn
+              title={CONST.PRIMARY_BTN_RESET_TIMER}
+          /> */}
+          
+          <HorizontalBar 
+            components={[
+              <PrimaryBtn 
+              title={CONST.PRIMARY_BTN_CREATE_TIMER}
+              />,
+              <PrimaryBtn
+              title={CONST.PRIMARY_BTN_RESET_TIMER}
+              />
+            ]}
+          />
+
         </Model>
        </GradientDiv>
     </div>
