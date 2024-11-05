@@ -1,6 +1,7 @@
 import CONST from "./CONST";
 import Model from "./components/Model";
 import GradientDiv from "./components/GradientDiv";
+import "./App.css";
 
 function App() {
 
