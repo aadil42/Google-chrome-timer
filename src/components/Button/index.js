@@ -1,8 +1,9 @@
 
-const Button = ({styles, title}) => {
+const Button = ({styles, title, clickHandler}) => {
     return (
         <button
         style={styles}
+        onClick={clickHandler}
         >
             {title}
         </button>

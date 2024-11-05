@@ -1,8 +1,9 @@
 import Button from "../Button";
 
-const PrimaryBtn = ({title}) => {
+const PrimaryBtn = ({title, clickHandler}) => {
     return (
         <Button 
+        clickHandler={clickHandler}
         title={title} 
         styles={{
             display: 'block',

@@ -9,6 +9,14 @@ import "./App.css";
 
 function App() {
 
+  const onResetClick = () => {
+    alert("Are you sure you wanna reset?");
+  }
+
+  const onCreateClick = () => {
+    alert("Lets create!!");
+  }
+
   return (
     <div className="App">
        <GradientDiv 
@@ -26,20 +34,16 @@ function App() {
             paddingTop: '20px', 
           }}
           />
-          {/* <PrimaryBtn 
-              title={CONST.PRIMARY_BTN_CREATE_TIMER}
-          />
-          <PrimaryBtn
-              title={CONST.PRIMARY_BTN_RESET_TIMER}
-          /> */}
-          
+
           <HorizontalBar 
             components={[
               <PrimaryBtn 
               title={CONST.PRIMARY_BTN_CREATE_TIMER}
+              clickHandler={onCreateClick}
               />,
               <PrimaryBtn
               title={CONST.PRIMARY_BTN_RESET_TIMER}
+              clickHandler={onResetClick}
               />
             ]}
           />
