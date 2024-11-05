@@ -4,6 +4,7 @@ const SecondaryBtn = ({title}) => {
     return (
         <Button 
             title={title}
+            styles={[]}
         />
     );
 }
