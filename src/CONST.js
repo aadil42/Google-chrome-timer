@@ -3,7 +3,8 @@ const CONST = {
     POP_UP_WINDOW_WIDTH: "600px",
     POP_UP_WINDOW_PRIMARY_BG: "#F24B6A",
     POP_UP_WINDOW_SECONDARY_BG:  "#F27983",
-    MAIN_TITLE: "Google Chrome Timer"
+    MAIN_TITLE: "Google Chrome Timer",
+    PRIMARY_BTN_TITLE: "Create Timer"
 }
 
 
