@@ -22,4 +22,4 @@ const PrimaryBtn = ({title}) => {
     );
 }
 
-return PrimaryBtn;
+export default PrimaryBtn;
