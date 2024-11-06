@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import CONST from "./CONST";
 import Model from "./components/Model";
 import GradientDiv from "./components/GradientDiv";
@@ -9,9 +11,12 @@ import AlertPopup from "./components/AlertPopup";
 import "./App.css";
 
 function App() {
+  
+  const [shouldShowPopup, setShouldShowPopup] = useState(false);
 
   const onResetClick = () => {
-    alert("Are you sure you wanna reset?");
+    // alert("Are you sure you wanna reset?");
+    setShouldShowPopup(true);
   }
 
   const onCreateClick = () => {
@@ -19,11 +24,13 @@ function App() {
   }
 
   const onNoClick = () => {
-    
+    setShouldShowPopup(false);
   }
 
   const onYesClick = () =>  {
-
+    // delete everything that is added 
+    // hide the alertPopup
+    setShouldShowPopup(false);
   }
 
   return (
@@ -57,14 +64,14 @@ function App() {
             ]}
           />
 
-          <AlertPopup 
+          {shouldShowPopup && <AlertPopup 
             width={CONST.RESET_CONFIRMATION_WIDTH}
             height={CONST.RESET_CONFIRMATION_HEIGHT}
             color="#ffffff"
             message={CONST.RESET_CONFIRMATION_MESSAGE}
             onYes={() => { onYesClick() }}
             onNo={() => { onNoClick() }}
-          />
+          />}
 
         </Model>
        </GradientDiv>
