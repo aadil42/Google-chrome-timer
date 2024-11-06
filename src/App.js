@@ -58,8 +58,10 @@ function App() {
           />
 
           <AlertPopup 
+            width={CONST.RESET_CONFIRMATION_WIDTH}
+            height={CONST.RESET_CONFIRMATION_HEIGHT}
             color="#ffffff"
-            message="my msg"
+            message={CONST.RESET_CONFIRMATION_MESSAGE}
             onYes={() => { onYesClick() }}
             onNo={() => { onNoClick() }}
           />

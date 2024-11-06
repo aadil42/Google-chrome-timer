@@ -5,12 +5,21 @@ import SecondaryBtn from "../SecondaryBtn";
 
 import "./style.css";
 
-const AlertPopup = ({ message, onYes, onNo, color }) => {
+const AlertPopup = ({width, height, message, onYes, onNo, color }) => {
+
 
     return (
         <div className="overlay">
-            <div className="alert-popup" style={{ backgroundColor: color }}>
-            <p>{message}</p>
+            <div 
+            className="alert-popup" 
+            style={{  
+                backgroundColor: color, 
+                width: width, 
+                height: height 
+            }}
+            >
+
+            <h3>{message}</h3>
 
             <HorizontalBar 
                 components={[
