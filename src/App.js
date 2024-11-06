@@ -4,6 +4,7 @@ import GradientDiv from "./components/GradientDiv";
 import MainTitle from "./components/MainTitle";
 import PrimaryBtn from "./components/PrimaryBtn";
 import HorizontalBar from "./components/HorizontalBar";
+import AlertPopup from "./components/AlertPopup";
 
 import "./App.css";
 
@@ -15,6 +16,14 @@ function App() {
 
   const onCreateClick = () => {
     alert("Lets create!!");
+  }
+
+  const onNoClick = () => {
+    
+  }
+
+  const onYesClick = () =>  {
+
   }
 
   return (
@@ -46,6 +55,13 @@ function App() {
               clickHandler={onResetClick}
               />
             ]}
+          />
+
+          <AlertPopup 
+            color="#ffffff"
+            message="my msg"
+            onYes={() => { onYesClick() }}
+            onNo={() => { onNoClick() }}
           />
 
         </Model>
