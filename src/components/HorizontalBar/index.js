@@ -4,7 +4,7 @@ const HorizontalBar = ({components}) => {
         <div
         style={{
             display: 'flex',
-            justifyContent: 'space-around',
+            justifyContent: 'center',
             alignItems: 'center',
         }}
         >
