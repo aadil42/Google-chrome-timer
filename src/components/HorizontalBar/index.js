@@ -1,12 +1,8 @@
 
-const HorizontalBar = ({components}) => {
+const HorizontalBar = ({components, styles}) => {
     return (
         <div
-        style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-        }}
+        style={styles}
         >
             {components.map((Component) => Component)}
         </div>
