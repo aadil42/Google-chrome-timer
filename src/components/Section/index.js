@@ -35,7 +35,7 @@ const Section = ({timerData, onCloseClick, sectionId, showEnterTimerPopUp}) => {
                     />,
                     <Tertiary
                         title="+"
-                        clickHandler={() => {showEnterTimerPopUp()}}
+                        clickHandler={() => {showEnterTimerPopUp(sectionId)}}
                     />
                 ]}
 

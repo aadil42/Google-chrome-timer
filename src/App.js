@@ -22,21 +22,22 @@ function App() {
   const [sectionToBeDeletedId, setSectionToBeDeletedId] = useState(null);
   const previouselyAddedSections = localStorageGetData(CONST.LOCAL_STORAGE_SECTIONS_KEY);
   const [sections, setSections] = useState(previouselyAddedSections);
+  const [enteredMinutes, setEnteredMinutes] = useState(0);
   const [ShouldShowEnterTimerMinutesPopup, setShouldShowEnterTimerMinutesPopup] = useState(false);
   const [selectedSectionIdx, setSelectedSectionId] = useState(null);
 
-  const showEnterTimerPopUp = () => {
-    onAddTimerInSection(60);
+  const showEnterTimerPopUp = (targetIdx) => {
+    setSelectedSectionId(targetIdx);
     setShouldShowEnterTimerMinutesPopup(true);
   }
   
   const onAddTimerInSection = (timer) => {
-    
     setSections((sections) => {
       return sections.map((section, idx) => {
         if(idx === selectedSectionIdx) {
           section.timers.push(timer);
         }
+        return section;
       });
     });
 
@@ -62,7 +63,7 @@ function App() {
   }
 
   const onCreateTimerAddMinutes = (minutes) => {
-
+    setEnteredMinutes(minutes);
     setShouldShowEnterTimerMinutesPopup(false);
   }
 
@@ -127,6 +128,11 @@ function App() {
   useEffect(() => {
     localStorageSetData(CONST.LOCAL_STORAGE_SECTIONS_KEY, sections);
   }, [sections]); 
+
+  // adds minutes timer
+  useEffect(() => {
+    onAddTimerInSection(enteredMinutes);
+  }, [enteredMinutes]);
 
   return (
     <div className="App">
@@ -197,7 +203,6 @@ function App() {
             onNo={() => { onNoDeleteSectionClick() }}
           />}
 
-
           {ShouldShowEnterTimerMinutesPopup && <InputPopup 
             message={CONST.CREATE_TIMER_MINUTES_MESSAGE}
             color="#ffffff"
@@ -215,7 +220,7 @@ function App() {
                       onCloseClick={() => {showSectionCloseBtnClickWarning(idx)}}
                       sectionId={idx}
                       onAddTimerClick={() => {}}
-                      showEnterTimerPopUp={showEnterTimerPopUp}
+                      showEnterTimerPopUp={(sectionId) => {showEnterTimerPopUp(sectionId)}}
                     />
             })
           }
