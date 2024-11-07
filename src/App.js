@@ -10,6 +10,7 @@ import AlertPopup from "./components/AlertPopup";
 import InputPopup from "./components/InputPopup";
 import {localStorageGetData, localStorageSetData} from "./libs/localStorage";
 import Section from "./components/Section";
+import Scrollable from "./components/Scrollable";
 
 import "./App.css";
 
@@ -61,6 +62,9 @@ function App() {
   const onYesClick = () =>  {
     // delete everything that is added 
     // hide the alertPopup
+    setSections(() => {
+      return [];
+    });
     setShouldShowPopup(false);
   }
 
@@ -76,7 +80,8 @@ function App() {
        >
        <Model 
         width={CONST.POP_UP_WINDOW_WIDTH} 
-        height={CONST.POP_UP_WINDOW_HEIGHT}
+        minHeight={CONST.POP_UP_WINDOW_HEIGHT}
+        padding="10px"
         >
           <MainTitle 
           title={CONST.MAIN_TITLE} 
@@ -127,7 +132,8 @@ function App() {
           
           {sections && sections.map((timerData) => {
               return <Section timerData={timerData} />
-          })}
+            })
+          }
 
         </Model>
        </GradientDiv>

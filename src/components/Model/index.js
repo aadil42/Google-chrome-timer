@@ -1,9 +1,11 @@
-const Model = ({children, width, height}) => {
+const Model = ({children, width, height, minHeight, padding}) => {
 
     return (
         <div style={{
             width: width,
-            height: height
+            // height: height,
+            minHeight: minHeight,
+            paddingBottom: padding
         }}>
             {children}
         </div>
