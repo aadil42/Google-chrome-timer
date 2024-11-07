@@ -1,3 +1,4 @@
+import { useState } from "react";
 
 import HorizontalBar from "../HorizontalBar";
 import PrimaryHeader from "../PrimaryHeader";
@@ -5,8 +6,9 @@ import CONST from "../../CONST";
 import SecondaryBtn from "../SecondaryBtn";
 import Tertiary from "../TertiaryBtn";
 import ContainerWithCloseBtn from "../ContainerWithCloseBtn";
+import InputPopup from "../InputPopup";
 
-const Section = ({timerData, onCloseClick}) => {
+const Section = ({timerData, onCloseClick, sectionId, showEnterTimerPopUp}) => {
 
     return (
         <ContainerWithCloseBtn
@@ -33,7 +35,7 @@ const Section = ({timerData, onCloseClick}) => {
                     />,
                     <Tertiary
                         title="+"
-                        clickHandler={() => {console.log("adding...")}}
+                        clickHandler={() => {showEnterTimerPopUp()}}
                     />
                 ]}
 

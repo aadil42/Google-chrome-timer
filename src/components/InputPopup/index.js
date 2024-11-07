@@ -3,7 +3,7 @@ import './style.css';
 
 import SecondaryBtn from '../SecondaryBtn';
 
-const InputPopup = ({width, height, message, color, addTimerClickHandler, titleColor, hideInputPopup }) => {
+const InputPopup = ({width, height, message, color, addTimerClickHandler, titleColor, hideInputPopup, placeholder }) => {
 
   const popupRef = useRef(null);
   const inputRef = useRef(null);
@@ -39,7 +39,7 @@ const InputPopup = ({width, height, message, color, addTimerClickHandler, titleC
         <input
           ref={inputRef}
           type="text"
-          placeholder="Title"
+          placeholder={placeholder}
           className="input-field"
         />
         <SecondaryBtn 

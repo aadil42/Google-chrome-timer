@@ -22,6 +22,25 @@ function App() {
   const [sectionToBeDeletedId, setSectionToBeDeletedId] = useState(null);
   const previouselyAddedSections = localStorageGetData(CONST.LOCAL_STORAGE_SECTIONS_KEY);
   const [sections, setSections] = useState(previouselyAddedSections);
+  const [ShouldShowEnterTimerMinutesPopup, setShouldShowEnterTimerMinutesPopup] = useState(false);
+  const [selectedSectionIdx, setSelectedSectionId] = useState(null);
+
+  const showEnterTimerPopUp = () => {
+    onAddTimerInSection(60);
+    setShouldShowEnterTimerMinutesPopup(true);
+  }
+  
+  const onAddTimerInSection = (timer) => {
+    
+    setSections((sections) => {
+      return sections.map((section, idx) => {
+        if(idx === selectedSectionIdx) {
+          section.timers.push(timer);
+        }
+      });
+    });
+
+  }
 
   const onResetClick = () => {
     // alert("Are you sure you wanna reset?");
@@ -40,6 +59,11 @@ function App() {
 
   const onCreateClick = () => {
     setShouldShowCreateTimerInputPopup(true);
+  }
+
+  const onCreateTimerAddMinutes = (minutes) => {
+
+    setShouldShowEnterTimerMinutesPopup(false);
   }
 
   const onCreateTimerAddClick = (title) => {
@@ -68,7 +92,12 @@ function App() {
   }
   
   const onCreateTimerClickOutsidePopup = () => {
-    setShouldShowCreateTimerInputPopup(false);
+    setShouldShowEnterTimerMinutesPopup(false);
+  }
+
+  const onCreateTimerClickOutsideAddMinutePopup = () => {
+    console.log("coming here");
+    setShouldShowEnterTimerMinutesPopup(false);
   }
   
   const onYesDeleteSectionClick = () => {
@@ -154,6 +183,7 @@ function App() {
             height={CONST.CREATE_TIMER_TITLE_HEIGHT}
             addTimerClickHandler={onCreateTimerAddClick}
             hideInputPopup={onCreateTimerClickOutsidePopup}
+            placeholder="Title"
           />}
           
 
@@ -167,10 +197,25 @@ function App() {
             onNo={() => { onNoDeleteSectionClick() }}
           />}
 
+
+          {ShouldShowEnterTimerMinutesPopup && <InputPopup 
+            message={CONST.CREATE_TIMER_MINUTES_MESSAGE}
+            color="#ffffff"
+            titleColor="#F24B6A"
+            width={CONST.CREATE_TIMER_MINUTES_MESSAGE_WIDTH}
+            height={CONST.CREATE_TIMER_MINUTES_MESSAGE_HEIGHT}
+            addTimerClickHandler={onCreateTimerAddMinutes}
+            hideInputPopup={onCreateTimerClickOutsideAddMinutePopup}
+            placeholder="Minutes"
+          />}
+
           {sections && sections.map((timerData, idx) => {
               return <Section  
                       timerData={timerData} 
                       onCloseClick={() => {showSectionCloseBtnClickWarning(idx)}}
+                      sectionId={idx}
+                      onAddTimerClick={() => {}}
+                      showEnterTimerPopUp={showEnterTimerPopUp}
                     />
             })
           }
