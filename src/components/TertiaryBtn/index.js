@@ -1,6 +1,6 @@
 import Button from "../Button";
 
-const Tertiary = ({title, clickHandler}) => {
+const TertiaryBtn = ({title, clickHandler, styles}) => {
     return (
         <Button 
         clickHandler={clickHandler}
@@ -16,10 +16,10 @@ const Tertiary = ({title, clickHandler}) => {
             cursor: 'pointer',
             fontSize: '20px',
             transition: 'background-color 0.3s',
-            fontWeight: 'bold',            
+            fontWeight: 'bold', 
           }}
         />
     );
 }
 
-export default Tertiary;
+export default TertiaryBtn;

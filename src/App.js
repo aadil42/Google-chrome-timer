@@ -27,6 +27,16 @@ function App() {
     setShouldShowPopup(true);
   }
 
+  const onSecionCloseBtnClick = (targetIdx) => {
+
+    setSections((sections) => {
+      return sections.filter((section, idx) => {
+        if(idx !== targetIdx) return section;
+      });
+    });
+    
+  }
+
   const onCreateClick = () => {
     setShouldShowCreateTimerInputPopup(true);
   }
@@ -130,8 +140,11 @@ function App() {
             hideInputPopup={onCreateTimerClickOutsidePopup}
           />}
           
-          {sections && sections.map((timerData) => {
-              return <Section timerData={timerData} />
+          {sections && sections.map((timerData, idx) => {
+              return <Section  
+                      timerData={timerData} 
+                      onCloseClick={() => {onSecionCloseBtnClick(idx)}}
+                    />
             })
           }
 

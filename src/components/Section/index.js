@@ -4,9 +4,14 @@ import PrimaryHeader from "../PrimaryHeader";
 import CONST from "../../CONST";
 import SecondaryBtn from "../SecondaryBtn";
 import Tertiary from "../TertiaryBtn";
+import ContainerWithCloseBtn from "../ContainerWithCloseBtn";
 
-const Section = ({timerData}) => {
+const Section = ({timerData, onCloseClick}) => {
+
     return (
+        <ContainerWithCloseBtn
+        onClose={onCloseClick}
+        >
             <HorizontalBar 
                 components={[
                     <PrimaryHeader 
@@ -51,6 +56,7 @@ const Section = ({timerData}) => {
                     fontWeight: 'bold',  
                 }}
             />
+        </ContainerWithCloseBtn>
     );
 }
 
