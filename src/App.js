@@ -28,6 +28,10 @@ function App() {
   const onCreateTimerAddClick = () => {
     setShouldShowCreateTimerInputPopup(false);
   }
+
+  const onCreateTimerClickOutsidePopup = () => {
+    setShouldShowCreateTimerInputPopup(false);
+  }
   
   const onNoClick = () => {
     setShouldShowPopup(false);
@@ -86,7 +90,8 @@ function App() {
             titleColor="#F24B6A"
             width={CONST.CREATE_TIMER_TITLE_WIDTH}
             height={CONST.CREATE_TIMER_TITLE_HEIGHT}
-            clickHandler={onCreateTimerAddClick}
+            addTimerClickHandler={onCreateTimerAddClick}
+            hideInputPopup={onCreateTimerClickOutsidePopup}
           />}
           
 

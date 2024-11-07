@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import './style.css';
 
 import SecondaryBtn from '../SecondaryBtn';
 
-const InputPopup = ({width, height, message, color, clickHandler, titleColor }) => {
+const InputPopup = ({width, height, message, color, addTimerClickHandler, titleColor, hideInputPopup }) => {
+
+  const popupRef = useRef(null);
+  
+  const keepOrHideInputPopup = (e) => {
+    if(popupRef.current && !popupRef.current.contains(e.target)) {
+        hideInputPopup();
+    }
+  }
+
   return (
-    <div className="overlay">
+    <div 
+        className="overlay" 
+        onClick={(e) => {keepOrHideInputPopup(e)}}    
+    >
       <div
+       ref={popupRef}
        className="input-popup" 
        style={{ 
         backgroundColor: color,
@@ -28,7 +41,7 @@ const InputPopup = ({width, height, message, color, clickHandler, titleColor }) 
         />
         <SecondaryBtn 
             title="Add"
-            clickHandler={clickHandler}
+            clickHandler={addTimerClickHandler}
         />
       </div>
     </div>
