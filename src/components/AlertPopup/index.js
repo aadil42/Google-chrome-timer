@@ -5,7 +5,7 @@ import SecondaryBtn from "../SecondaryBtn";
 
 import "./style.css";
 
-const AlertPopup = ({width, height, message, onYes, onNo, color }) => {
+const AlertPopup = ({titleColor, width, height, message, onYes, onNo, color }) => {
 
 
     return (
@@ -19,7 +19,13 @@ const AlertPopup = ({width, height, message, onYes, onNo, color }) => {
             }}
             >
 
-            <h3>{message}</h3>
+            <h3 
+            style={{
+                color: titleColor
+            }}
+            >
+                {message}
+            </h3>
 
             <HorizontalBar 
                 components={[
