@@ -18,7 +18,8 @@ function App() {
   
   const [shouldShowPopup, setShouldShowPopup] = useState(false);
   const [shouldShowCreateTimerInputPopup, setShouldShowCreateTimerInputPopup] = useState(false);
-
+  const [shouldShowConfirmSectionDeletePopup, setShouldShowConfirmSectionDeletePopup] = useState(false);
+  const [sectionToBeDeletedId, setSectionToBeDeletedId] = useState(null);
   const previouselyAddedSections = localStorageGetData(CONST.LOCAL_STORAGE_SECTIONS_KEY);
   const [sections, setSections] = useState(previouselyAddedSections);
 
@@ -61,10 +62,25 @@ function App() {
     setShouldShowCreateTimerInputPopup(false);
   }
 
+  const showSectionCloseBtnClickWarning = (targetIdx) => {
+    setSectionToBeDeletedId(targetIdx);
+    setShouldShowConfirmSectionDeletePopup(true);
+  }
+  
   const onCreateTimerClickOutsidePopup = () => {
     setShouldShowCreateTimerInputPopup(false);
   }
   
+  const onYesDeleteSectionClick = () => {
+    onSecionCloseBtnClick(sectionToBeDeletedId);
+    setSectionToBeDeletedId(null);
+    setShouldShowConfirmSectionDeletePopup(false);
+  }
+
+  const onNoDeleteSectionClick = () => {
+    setShouldShowConfirmSectionDeletePopup(false);
+  }
+
   const onNoClick = () => {
     setShouldShowPopup(false);
   }
@@ -140,10 +156,21 @@ function App() {
             hideInputPopup={onCreateTimerClickOutsidePopup}
           />}
           
+
+          {shouldShowConfirmSectionDeletePopup && <AlertPopup 
+            width={CONST.RESET_CONFIRMATION_WIDTH}
+            height={CONST.RESET_CONFIRMATION_HEIGHT}
+            color="#ffffff"
+            titleColor="#F24B6A"
+            message={CONST.RESET_CONFIRMATION_MESSAGE}
+            onYes={() => { onYesDeleteSectionClick() }}
+            onNo={() => { onNoDeleteSectionClick() }}
+          />}
+
           {sections && sections.map((timerData, idx) => {
               return <Section  
                       timerData={timerData} 
-                      onCloseClick={() => {onSecionCloseBtnClick(idx)}}
+                      onCloseClick={() => {showSectionCloseBtnClickWarning(idx)}}
                     />
             })
           }

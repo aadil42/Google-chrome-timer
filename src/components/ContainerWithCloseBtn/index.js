@@ -3,7 +3,7 @@ import QuaternaryBtn from "../QuaternaryBtn";
 
 function ContainerWithCloseBtn({children, onClose}) {
   const [isHovered, setIsHovered] = useState(false);
-
+  
   const containerStyle = {
     position: 'relative'
   };
@@ -31,7 +31,7 @@ function ContainerWithCloseBtn({children, onClose}) {
     >
       <QuaternaryBtn 
       title="X"
-      clickHandler={() => onClose()} 
+      clickHandler={onClose} 
       styles={buttonStyle}
       />
 
