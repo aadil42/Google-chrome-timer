@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import CONST from "./CONST";
 import Model from "./components/Model";
@@ -8,6 +8,8 @@ import PrimaryBtn from "./components/PrimaryBtn";
 import HorizontalBar from "./components/HorizontalBar";
 import AlertPopup from "./components/AlertPopup";
 import InputPopup from "./components/InputPopup";
+import {localStorageGetData, localStorageSetData} from "./libs/localStorage";
+import Section from "./components/Section";
 
 import "./App.css";
 
@@ -15,6 +17,9 @@ function App() {
   
   const [shouldShowPopup, setShouldShowPopup] = useState(false);
   const [shouldShowCreateTimerInputPopup, setShouldShowCreateTimerInputPopup] = useState(false);
+
+  const previouselyAddedSections = localStorageGetData(CONST.LOCAL_STORAGE_SECTIONS_KEY);
+  const [sections, setSections] = useState(previouselyAddedSections);
 
   const onResetClick = () => {
     // alert("Are you sure you wanna reset?");
@@ -25,7 +30,23 @@ function App() {
     setShouldShowCreateTimerInputPopup(true);
   }
 
-  const onCreateTimerAddClick = () => {
+  const onCreateTimerAddClick = (title) => {
+    setSections((preSections) => {
+
+      if(preSections) {
+        return [...preSections, {
+          title: title,
+          timers: []
+        }];
+      }
+
+      return [{
+        title: title,
+        timers: []
+      }];
+
+    });
+
     setShouldShowCreateTimerInputPopup(false);
   }
 
@@ -42,6 +63,11 @@ function App() {
     // hide the alertPopup
     setShouldShowPopup(false);
   }
+
+  // stores the latest data for section in localstorage 
+  useEffect(() => {
+    localStorageSetData(CONST.LOCAL_STORAGE_SECTIONS_KEY, sections);
+  }, [sections]); 
 
   return (
     <div className="App">
@@ -72,6 +98,11 @@ function App() {
               clickHandler={onResetClick}
               />
             ]}
+            styles={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
           />
 
           {shouldShowPopup && <AlertPopup 
@@ -94,6 +125,9 @@ function App() {
             hideInputPopup={onCreateTimerClickOutsidePopup}
           />}
           
+          {sections && sections.map((timerData) => {
+              return <Section timerData={timerData} />
+          })}
 
         </Model>
        </GradientDiv>

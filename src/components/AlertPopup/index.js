@@ -38,6 +38,11 @@ const AlertPopup = ({titleColor, width, height, message, onYes, onNo, color }) =
                 clickHandler={onNo}
                 />
                 ]}
+                styles={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
             />
 
             </div>

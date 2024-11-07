@@ -6,6 +6,8 @@ import SecondaryBtn from '../SecondaryBtn';
 const InputPopup = ({width, height, message, color, addTimerClickHandler, titleColor, hideInputPopup }) => {
 
   const popupRef = useRef(null);
+  const inputRef = useRef(null);
+
   
   const keepOrHideInputPopup = (e) => {
     if(popupRef.current && !popupRef.current.contains(e.target)) {
@@ -35,13 +37,14 @@ const InputPopup = ({width, height, message, color, addTimerClickHandler, titleC
             {message}
         </h3>
         <input
+          ref={inputRef}
           type="text"
           placeholder="Title"
           className="input-field"
         />
         <SecondaryBtn 
             title="Add"
-            clickHandler={addTimerClickHandler}
+            clickHandler={() => {addTimerClickHandler(inputRef.current.value);}}
         />
       </div>
     </div>

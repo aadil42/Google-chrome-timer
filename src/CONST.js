@@ -13,7 +13,8 @@ const CONST = {
     RESET_CONFIRMATION_MESSAGE: "Are you sure?",
     CREATE_TIMER_TITLE: "Type name of your Timer",
     CREATE_TIMER_TITLE_WIDTH: "300px",
-    CREATE_TIMER_TITLE_HEIGHT: "160px"
+    CREATE_TIMER_TITLE_HEIGHT: "160px",
+    LOCAL_STORAGE_SECTIONS_KEY: "sections"
 }
 
 
