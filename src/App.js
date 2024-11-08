@@ -11,6 +11,7 @@ import InputPopup from "./components/InputPopup";
 import {localStorageGetData, localStorageSetData} from "./libs/localStorage";
 import Section from "./components/Section";
 import Scrollable from "./components/Scrollable";
+import CurrentRunningTimer from "./components/CurrentRunningTimer";
 
 import "./App.css";
 
@@ -25,22 +26,32 @@ function App() {
   const [enteredMinutes, setEnteredMinutes] = useState(0);
   const [ShouldShowEnterTimerMinutesPopup, setShouldShowEnterTimerMinutesPopup] = useState(false);
   const [selectedSectionIdx, setSelectedSectionId] = useState(null);
-
+  const [currentTimerEndTime, setCurrentTimerEndTime] = useState(localStorageGetData(CONST.CURRENT_TIMER_KEY));
+  const isTimerRunning = currentTimerEndTime > Date.now();
+  
   const showEnterTimerPopUp = (targetIdx) => {
     setSelectedSectionId(targetIdx);
     setShouldShowEnterTimerMinutesPopup(true);
   }
   
   const onAddTimerInSection = (timer) => {
+    if(isTimerRunning) return;
+
+    console.log(timer, 'this should add');
+    
+    localStorageSetData(CONST.CURRENT_TIMER_KEY, Date.now() + (1000 * 60 * timer));
+    setCurrentTimerEndTime(Date.now() + (1000 * 60 * timer));
+  }
+
+  const onTimerComplete = () => {
     setSections((sections) => {
       return sections.map((section, idx) => {
         if(idx === selectedSectionIdx) {
-          section.timers.push(timer);
+          section.timers.push(enteredMinutes);
         }
         return section;
       });
     });
-
   }
 
   const onResetClick = () => {
@@ -129,7 +140,7 @@ function App() {
     localStorageSetData(CONST.LOCAL_STORAGE_SECTIONS_KEY, sections);
   }, [sections]); 
 
-  // adds minutes timer
+  // // adds minutes timer
   useEffect(() => {
     onAddTimerInSection(enteredMinutes);
   }, [enteredMinutes]);
@@ -144,6 +155,8 @@ function App() {
         minHeight={CONST.POP_UP_WINDOW_HEIGHT}
         padding="10px"
         >
+
+          
           <MainTitle 
           title={CONST.MAIN_TITLE} 
           styles={{
@@ -152,6 +165,14 @@ function App() {
             paddingTop: '20px', 
           }}
           />
+
+          {isTimerRunning &&           
+            <CurrentRunningTimer 
+            endTime={currentTimerEndTime}
+            onTimerComplete={onTimerComplete}
+            />
+          }
+
 
           <HorizontalBar 
             components={[

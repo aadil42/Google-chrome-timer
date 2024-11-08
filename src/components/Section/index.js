@@ -10,6 +10,26 @@ import InputPopup from "../InputPopup";
 
 const Section = ({timerData, onCloseClick, sectionId, showEnterTimerPopUp}) => {
 
+    const styles = {
+        clockIconContainer: {
+          position: 'relative',
+          display: 'inline-block', // Keeps container size to icon
+        },
+        clockIcon: {
+          fontSize: '3rem', // Adjust icon size
+        },
+        clockTimer: {
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          fontSize: '1.5rem', // Adjust timer size
+          backgroundColor: 'rgba(0, 0, 0, 0.5)', // Optional background
+          color: 'white', // Optional text color
+          padding: '0.2rem', // Optional padding around timer
+          borderRadius: '50%', // Optional circular background
+        },
+      };
+      
     return (
         <ContainerWithCloseBtn
         onClose={onCloseClick}
@@ -24,7 +44,10 @@ const Section = ({timerData, onCloseClick, sectionId, showEnterTimerPopUp}) => {
                     />,
                     <HorizontalBar 
                         components={timerData.timers.map((timer) => {
-                            return <p>🕒</p>;
+                            return <p className={styles.clockIconContainer}>
+                                    <span className={styles.clockIcon}>🕒</span>
+                                    <span className={styles.clockTimer}>{timer}</span>
+                                   </p>;
                         })}
                         styles={{
                             display: 'flex',
