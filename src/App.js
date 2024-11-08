@@ -20,18 +20,23 @@ function App() {
   
   const {myAppState, dispatch} = useContext(AppContext);
 
-  const [shouldShowConfirmSectionDeletePopup, setShouldShowConfirmSectionDeletePopup] = useState(false);
+  const [selectedSectionIdx, setSelectedSectionId] = useState(null);
   const [sectionToBeDeletedId, setSectionToBeDeletedId] = useState(null);
   const previouselyAddedSections = localStorageGetData(CONST.LOCAL_STORAGE_SECTIONS_KEY);
   const [sections, setSections] = useState(previouselyAddedSections);
   const [enteredMinutes, setEnteredMinutes] = useState(0);
   const [ShouldShowEnterTimerMinutesPopup, setShouldShowEnterTimerMinutesPopup] = useState(false);
-  const [selectedSectionIdx, setSelectedSectionId] = useState(null);
   const [currentTimerEndTime, setCurrentTimerEndTime] = useState(localStorageGetData(CONST.CURRENT_TIMER_KEY));
   const isTimerRunning = currentTimerEndTime > Date.now();
   
   const showEnterTimerPopUp = (targetIdx) => {
-    setSelectedSectionId(targetIdx);
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.UPDATE_SELECTED_SECTION_IDX,
+      payload: {
+        targetIdx
+      }
+    });
+    // setSelectedSectionId(targetIdx);
     setShouldShowEnterTimerMinutesPopup(true);
   }
   
@@ -47,7 +52,7 @@ function App() {
   const onTimerComplete = () => {
     setSections((sections) => {
       return sections.map((section, idx) => {
-        if(idx === selectedSectionIdx) {
+        if(idx === myAppState.selectedSectionIdx) {
           section.timers.push(enteredMinutes);
         }
         return section;

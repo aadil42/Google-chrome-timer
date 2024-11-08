@@ -44,6 +44,13 @@ const AppContextReducer = (state, action) => {
             shouldShowConfirmPopupForDeleteSection: false
         }
     }
+
+    if(action.type === REDUCER_ACTION_TYPES.UPDATE_SELECTED_SECTION_IDX) {
+        return {
+            ...state,
+            selectedSectionIdx: action.payload.targetIdx
+        }
+    }
 }
 
 export default AppContextReducer;
