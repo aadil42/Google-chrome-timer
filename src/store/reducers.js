@@ -2,7 +2,6 @@ import CONST from "../CONST";
 
 const AppContextReducer = (state, action) => {
     const {REDUCER_ACTION_TYPES} = CONST;
-    console.log("from Reducer", CONST);
     if(action.type === REDUCER_ACTION_TYPES.SHOW_POPUP_FOR_DELETING_ALL_SECTIONS) {
         return {
                 ...state, 
@@ -62,11 +61,31 @@ const AppContextReducer = (state, action) => {
     if(action.type === REDUCER_ACTION_TYPES.UPDATE_ENTERED_MINUTES) {
         return {
             ...state, 
-            enteredMinutes: action.payload.enteredMinutes
+            enteredMinutes: action.payload.minutes
         }
     };
 
-    
+    if(action.type === REDUCER_ACTION_TYPES.SHOW_POPUP_FOR_ENTERING_MINUTES) {
+        return {
+            ...state,
+            shouldShowPopUpForEnteringMinutes: true
+        }
+    }; 
+
+    if(action.type === REDUCER_ACTION_TYPES.HIDE_POPUP_FOR_ENTERING_MINUTES) {
+        return {
+            ...state,
+            shouldShowPopUpForEnteringMinutes: false
+        }
+    }; 
+
+    if(action.type === REDUCER_ACTION_TYPES.UPDATE_CURRENT_TIMER_END_TIME) {
+        return {
+            ...state,
+            isTimerRunning: action.payload.currentTimerEndTime > Date.now(),
+            currentTimerEndTime: action.payload.currentTimerEndTime
+        }
+    }
 }
 
 export default AppContextReducer;

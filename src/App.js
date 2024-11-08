@@ -11,7 +11,6 @@ import AlertPopup from "./components/AlertPopup";
 import InputPopup from "./components/InputPopup";
 import {localStorageGetData, localStorageSetData} from "./libs/localStorage";
 import Section from "./components/Section";
-import Scrollable from "./components/Scrollable";
 import CurrentRunningTimer from "./components/CurrentRunningTimer";
 
 import "./App.css";
@@ -19,13 +18,8 @@ import "./App.css";
 function App() {
   
   const {myAppState, dispatch} = useContext(AppContext);
-
   const previouselyAddedSections = localStorageGetData(CONST.LOCAL_STORAGE_SECTIONS_KEY);
   const [sections, setSections] = useState(previouselyAddedSections);
-
-  const [ShouldShowEnterTimerMinutesPopup, setShouldShowEnterTimerMinutesPopup] = useState(false);
-  const [currentTimerEndTime, setCurrentTimerEndTime] = useState(localStorageGetData(CONST.CURRENT_TIMER_KEY));
-  const isTimerRunning = currentTimerEndTime > Date.now();
   
   const showEnterTimerPopUp = (targetIdx) => {
     dispatch({
@@ -34,17 +28,21 @@ function App() {
         targetIdx
       }
     });
-    // setSelectedSectionId(targetIdx);
-    setShouldShowEnterTimerMinutesPopup(true);
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.SHOW_POPUP_FOR_ENTERING_MINUTES
+    });
   }
   
   const onAddTimerInSection = (timer) => {
-    if(isTimerRunning) return;
-
-    console.log(timer, 'this should add');
+    if(myAppState.isTimerRunning) return;
     
     localStorageSetData(CONST.CURRENT_TIMER_KEY, Date.now() + (1000 * 60 * timer));
-    setCurrentTimerEndTime(Date.now() + (1000 * 60 * timer));
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.UPDATE_CURRENT_TIMER_END_TIME,
+      payload: {
+        currentTimerEndTime: Date.now() + (1000 * 60 * timer)
+      }
+    })
   }
 
   const onTimerComplete = () => {
@@ -59,7 +57,6 @@ function App() {
   }
 
   const onResetClick = () => {
-    // alert("Are you sure you wanna reset?");
     dispatch({
       type: CONST.REDUCER_ACTION_TYPES.SHOW_POPUP_FOR_DELETING_ALL_SECTIONS
     });
@@ -79,7 +76,6 @@ function App() {
     dispatch({
       type: CONST.REDUCER_ACTION_TYPES.SHOW_CREATE_TIMER_SECTION_INPUT_POPUP
     });
-    // setShouldShowCreateTimerInputPopup(true);
   }
 
   const onCreateTimerAddMinutes = (minutes) => {
@@ -90,9 +86,9 @@ function App() {
       }
     });
 
-
-    // setEnteredMinutes(minutes);
-    setShouldShowEnterTimerMinutesPopup(false);
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.HIDE_POPUP_FOR_ENTERING_MINUTES
+    });
   }
 
   const onCreateTimerAddClick = (title) => {
@@ -114,11 +110,9 @@ function App() {
     dispatch({
       type: CONST.REDUCER_ACTION_TYPES.HIDE_CREATE_TIMER_SECTION_INPUT_POPUP
     });
-    // setShouldShowCreateTimerInputPopup(false);
   }
 
   const showSectionCloseBtnClickWarning = (targetIdx) => {
-    // setSectionToBeDeletedId(targetIdx);
     dispatch({
       type: CONST.REDUCER_ACTION_TYPES.UPDATE_TO_BE_DELETED_SECTION_IDX,
       payload: {
@@ -128,20 +122,22 @@ function App() {
     dispatch({
       type: CONST.REDUCER_ACTION_TYPES.SHOW_CONFIRM_POPUP_FOR_DELETE_SECTION
     });
-    // setShouldShowConfirmSectionDeletePopup(true);
   }
   
   const onCreateTimerClickOutsidePopup = () => {
     dispatch({
       type: CONST.REDUCER_ACTION_TYPES.HIDE_CREATE_TIMER_SECTION_INPUT_POPUP
     });
-    // setShouldShowCreateTimerInputPopup(false);
-    // setShouldShowEnterTimerMinutesPopup(false); // start here
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.HIDE_POPUP_FOR_ENTERING_MINUTES
+    });
   }
 
   const onCreateTimerClickOutsideAddMinutePopup = () => {
     console.log("coming here");
-    setShouldShowEnterTimerMinutesPopup(false);
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.HIDE_POPUP_FOR_ENTERING_MINUTES
+    })
   }
   
   const onYesDeleteSectionClick = () => {
@@ -154,19 +150,15 @@ function App() {
       }
     });
 
-    // onSecionCloseBtnClick(sectionToBeDeletedId);
-    // setSectionToBeDeletedId(null);
     dispatch({
       type: CONST.REDUCER_ACTION_TYPES.HIDE_CONFIRM_POPUP_FOR_DELETE_SECTION
     });
-    // setShouldShowConfirmSectionDeletePopup(false);
   }
 
   const onNoDeleteSectionClick = () => {
     dispatch({
       type: CONST.REDUCER_ACTION_TYPES.HIDE_CONFIRM_POPUP_FOR_DELETE_SECTION
     });
-    // setShouldShowConfirmSectionDeletePopup(false);
   }
 
   const onNoClick = () => {
@@ -218,13 +210,11 @@ function App() {
           }}
           />
 
-          {isTimerRunning &&           
+          {myAppState.isTimerRunning &&           
             <CurrentRunningTimer 
-            endTime={currentTimerEndTime}
             onTimerComplete={onTimerComplete}
             />
           }
-
 
           <HorizontalBar 
             components={[
@@ -276,7 +266,7 @@ function App() {
             onNo={() => { onNoDeleteSectionClick() }}
           />}
 
-          {ShouldShowEnterTimerMinutesPopup && <InputPopup 
+          {myAppState.shouldShowPopUpForEnteringMinutes && <InputPopup 
             message={CONST.CREATE_TIMER_MINUTES_MESSAGE}
             color="#ffffff"
             titleColor="#F24B6A"

@@ -1,9 +1,13 @@
 
+import { useContext } from "react";
 import Countdown from "react-countdown"
+import AppContext from "../../store/context";
 
-const CurrentRunningTimer = ({endTime, onTimerComplete}) => {
+const CurrentRunningTimer = ({onTimerComplete}) => {
+    const myContext = useContext(AppContext);
+
     return <Countdown 
-            date={endTime} 
+            date={myContext.currentTimerEndTime} 
             onComplete={onTimerComplete}
            />;
 }
