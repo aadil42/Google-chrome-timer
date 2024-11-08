@@ -22,7 +22,7 @@ function App() {
 
   const previouselyAddedSections = localStorageGetData(CONST.LOCAL_STORAGE_SECTIONS_KEY);
   const [sections, setSections] = useState(previouselyAddedSections);
-  const [enteredMinutes, setEnteredMinutes] = useState(0);
+
   const [ShouldShowEnterTimerMinutesPopup, setShouldShowEnterTimerMinutesPopup] = useState(false);
   const [currentTimerEndTime, setCurrentTimerEndTime] = useState(localStorageGetData(CONST.CURRENT_TIMER_KEY));
   const isTimerRunning = currentTimerEndTime > Date.now();
@@ -51,7 +51,7 @@ function App() {
     setSections((sections) => {
       return sections.map((section, idx) => {
         if(idx === myAppState.selectedSectionIdx) {
-          section.timers.push(enteredMinutes);
+          section.timers.push(myAppState.enteredMinutes);
         }
         return section;
       });
@@ -83,7 +83,15 @@ function App() {
   }
 
   const onCreateTimerAddMinutes = (minutes) => {
-    setEnteredMinutes(minutes);
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.UPDATE_ENTERED_MINUTES,
+      payload: {
+        minutes
+      }
+    });
+
+
+    // setEnteredMinutes(minutes);
     setShouldShowEnterTimerMinutesPopup(false);
   }
 
@@ -185,8 +193,8 @@ function App() {
 
   // // adds minutes timer
   useEffect(() => {
-    onAddTimerInSection(enteredMinutes);
-  }, [enteredMinutes]);
+    onAddTimerInSection(myAppState.enteredMinutes);
+  }, [myAppState.enteredMinutes]);
 
   return (
     

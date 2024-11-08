@@ -58,6 +58,15 @@ const AppContextReducer = (state, action) => {
             toBeDeleteSectionIdx: action.payload.targetIdx
         }
     }
+
+    if(action.type === REDUCER_ACTION_TYPES.UPDATE_ENTERED_MINUTES) {
+        return {
+            ...state, 
+            enteredMinutes: action.payload.enteredMinutes
+        }
+    };
+
+    
 }
 
 export default AppContextReducer;
