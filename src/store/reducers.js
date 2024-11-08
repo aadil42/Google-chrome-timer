@@ -107,10 +107,11 @@ const AppContextReducer = (state, action) => {
     }
 
     if(action.type === REDUCER_ACTION_TYPES.ADD_SECTION) {
+        
         if(state.sections) {
             return {
                 ...state,
-                sections: state.sections.push(action.payload.data)
+                sections: [...state.sections, action.payload.data]
             }
         }
         return {
