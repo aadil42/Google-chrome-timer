@@ -204,8 +204,8 @@ function App() {
 
   // stores the latest data for section in localstorage 
   useEffect(() => {
-    localStorageSetData(CONST.LOCAL_STORAGE_SECTIONS_KEY, sections);
-  }, [sections]); 
+    localStorageSetData(CONST.LOCAL_STORAGE_SECTIONS_KEY, myAppState.sections);
+  }, [myAppState.sections]); 
 
   // // adds minutes timer
   useEffect(() => {
