@@ -20,8 +20,6 @@ function App() {
   
   const {myAppState, dispatch} = useContext(AppContext);
 
-  const [selectedSectionIdx, setSelectedSectionId] = useState(null);
-  const [sectionToBeDeletedId, setSectionToBeDeletedId] = useState(null);
   const previouselyAddedSections = localStorageGetData(CONST.LOCAL_STORAGE_SECTIONS_KEY);
   const [sections, setSections] = useState(previouselyAddedSections);
   const [enteredMinutes, setEnteredMinutes] = useState(0);
@@ -112,7 +110,13 @@ function App() {
   }
 
   const showSectionCloseBtnClickWarning = (targetIdx) => {
-    setSectionToBeDeletedId(targetIdx);
+    // setSectionToBeDeletedId(targetIdx);
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.UPDATE_TO_BE_DELETED_SECTION_IDX,
+      payload: {
+        targetIdx
+      }
+    });
     dispatch({
       type: CONST.REDUCER_ACTION_TYPES.SHOW_CONFIRM_POPUP_FOR_DELETE_SECTION
     });
@@ -133,8 +137,17 @@ function App() {
   }
   
   const onYesDeleteSectionClick = () => {
-    onSecionCloseBtnClick(sectionToBeDeletedId);
-    setSectionToBeDeletedId(null);
+
+    onSecionCloseBtnClick(myAppState.toBeDeleteSectionIdx);
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.UPDATE_TO_BE_DELETED_SECTION_IDX,
+      payload: {
+        targetIdx: null
+      }
+    });
+
+    // onSecionCloseBtnClick(sectionToBeDeletedId);
+    // setSectionToBeDeletedId(null);
     dispatch({
       type: CONST.REDUCER_ACTION_TYPES.HIDE_CONFIRM_POPUP_FOR_DELETE_SECTION
     });

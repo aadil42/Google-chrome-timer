@@ -51,6 +51,13 @@ const AppContextReducer = (state, action) => {
             selectedSectionIdx: action.payload.targetIdx
         }
     }
+
+    if(action.type === REDUCER_ACTION_TYPES.UPDATE_TO_BE_DELETED_SECTION_IDX) {
+        return {
+            ...state,
+            toBeDeleteSectionIdx: action.payload.targetIdx
+        }
+    }
 }
 
 export default AppContextReducer;
