@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { AppContextProvider } from "./store/context";
+import { useState, useEffect, useContext } from "react";
+import AppContext from "./store/context";
 
 import CONST from "./CONST";
 import Model from "./components/Model";
@@ -18,7 +18,8 @@ import "./App.css";
 
 function App() {
   
-  const [shouldShowPopup, setShouldShowPopup] = useState(false);
+  const {myAppState, dispatch} = useContext(AppContext);
+
   const [shouldShowCreateTimerInputPopup, setShouldShowCreateTimerInputPopup] = useState(false);
   const [shouldShowConfirmSectionDeletePopup, setShouldShowConfirmSectionDeletePopup] = useState(false);
   const [sectionToBeDeletedId, setSectionToBeDeletedId] = useState(null);
@@ -57,7 +58,9 @@ function App() {
 
   const onResetClick = () => {
     // alert("Are you sure you wanna reset?");
-    setShouldShowPopup(true);
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.SHOW_POPUP_FOR_DELETING_ALL_SECTIONS
+    });
   }
 
   const onSecionCloseBtnClick = (targetIdx) => {
@@ -124,7 +127,9 @@ function App() {
   }
 
   const onNoClick = () => {
-    setShouldShowPopup(false);
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.HIDE_POPUP_FOR_DELETING_ALL_SECTIONS
+    });
   }
 
   const onYesClick = () =>  {
@@ -133,7 +138,9 @@ function App() {
     setSections(() => {
       return [];
     });
-    setShouldShowPopup(false);
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.HIDE_POPUP_FOR_DELETING_ALL_SECTIONS
+    });
   }
 
   // stores the latest data for section in localstorage 
@@ -149,7 +156,6 @@ function App() {
   return (
     
     <div className="App">
-      <AppContextProvider>
        <GradientDiv 
        gradientColors={[CONST.POP_UP_WINDOW_PRIMARY_BG, CONST.POP_UP_WINDOW_SECONDARY_BG]}
        >
@@ -195,7 +201,7 @@ function App() {
             }}
           />
 
-          {shouldShowPopup && <AlertPopup 
+          {myAppState.shouldShowPopupForDeletingAllSections && <AlertPopup 
             width={CONST.RESET_CONFIRMATION_WIDTH}
             height={CONST.RESET_CONFIRMATION_HEIGHT}
             color="#ffffff"
@@ -251,7 +257,6 @@ function App() {
 
         </Model>
        </GradientDiv>
-       </AppContextProvider>
     </div>
   );
 }
