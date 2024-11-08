@@ -120,6 +120,14 @@ const AppContextReducer = (state, action) => {
         }
     }
 
+    if(action.type  === REDUCER_ACTION_TYPES.DELETE_SECTION) {
+        return {
+            ...state,
+            sections: state.sections.filter((section, idx) => {
+                if(idx !== action.payload.targetIdx) return section;
+            })
+        }
+    }
 }
 
 export default AppContextReducer;

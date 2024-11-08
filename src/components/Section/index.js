@@ -1,14 +1,42 @@
-import { useState } from "react";
+
+import { useContext } from "react";
+import AppContext from "../../store/context";
+
 
 import HorizontalBar from "../HorizontalBar";
 import PrimaryHeader from "../PrimaryHeader";
 import CONST from "../../CONST";
-import SecondaryBtn from "../SecondaryBtn";
 import Tertiary from "../TertiaryBtn";
 import ContainerWithCloseBtn from "../ContainerWithCloseBtn";
-import InputPopup from "../InputPopup";
+import App from "../../App";
 
-const Section = ({timerData, onCloseClick, sectionId, showEnterTimerPopUp}) => {
+const Section = ({timerData, sectionId}) => {
+
+    const {myAppState, dispatch} = useContext(AppContext);
+
+    const plusBtnClickHandler = (targetIdx) => {
+        dispatch({
+            type: CONST.REDUCER_ACTION_TYPES.UPDATE_SELECTED_SECTION_IDX,
+            payload: {
+              targetIdx
+            }
+          });
+          dispatch({
+            type: CONST.REDUCER_ACTION_TYPES.SHOW_POPUP_FOR_ENTERING_MINUTES
+        });
+    }
+    
+    const closeBtnClickHandler = (targetIdx) => {
+        dispatch({
+            type: CONST.REDUCER_ACTION_TYPES.UPDATE_TO_BE_DELETED_SECTION_IDX,
+            payload: {
+              targetIdx
+            }
+          });
+          dispatch({
+            type: CONST.REDUCER_ACTION_TYPES.SHOW_CONFIRM_POPUP_FOR_DELETE_SECTION
+        });
+    }
 
     const styles = {
         clockIconContainer: {
@@ -32,7 +60,7 @@ const Section = ({timerData, onCloseClick, sectionId, showEnterTimerPopUp}) => {
       
     return (
         <ContainerWithCloseBtn
-        onClose={onCloseClick}
+        onClose={() => {closeBtnClickHandler(sectionId)}}
         >
             <HorizontalBar 
                 components={[
@@ -58,7 +86,7 @@ const Section = ({timerData, onCloseClick, sectionId, showEnterTimerPopUp}) => {
                     />,
                     <Tertiary
                         title="+"
-                        clickHandler={() => {showEnterTimerPopUp(sectionId)}}
+                        clickHandler={() => {plusBtnClickHandler(sectionId)}}
                     />
                 ]}
 

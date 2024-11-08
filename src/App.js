@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import AppContext from "./store/context";
 
 import CONST from "./CONST";
@@ -18,20 +18,6 @@ import "./App.css";
 function App() {
   
   const {myAppState, dispatch} = useContext(AppContext);
-  const [sections, setSections] = useState(myAppState.sections);
-  
-  const showEnterTimerPopUp = (targetIdx) => {
-    console.log("added adding timer here so its id is", targetIdx);
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.UPDATE_SELECTED_SECTION_IDX,
-      payload: {
-        targetIdx
-      }
-    });
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.SHOW_POPUP_FOR_ENTERING_MINUTES
-    });
-  }
   
   const onAddTimerInSection = (timer) => {
     if(myAppState.isTimerRunning) return;
@@ -53,16 +39,6 @@ function App() {
         targetIdx: myAppState.selectedSectionIdx
       }
     });
-
-    // setSections((sections) => {
-    //   return sections.map((section, idx) => {
-    //     if(idx === myAppState.selectedSectionIdx) {
-    //       section.timers.push(myAppState.enteredMinutes);
-    //     }
-    //     return section;
-    //   });
-    // });
-
   }
 
   const onResetClick = () => {
@@ -72,13 +48,12 @@ function App() {
   }
 
   const onSecionCloseBtnClick = (targetIdx) => {
-
-    setSections((sections) => {
-      return sections.filter((section, idx) => {
-        if(idx !== targetIdx) return section;
-      });
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.DELETE_SECTION,
+      payload: {
+        targetIdx
+      }
     });
-    
   }
 
   const onCreateClick = () => {
@@ -111,39 +86,12 @@ function App() {
         }
       }
     });
-
-    // setSections((preSections) => {
-
-    //   if(preSections) {
-    //     return [...preSections, {
-    //       title: title,
-    //       timers: []
-    //     }];
-    //   }
-
-    //   return [{
-    //     title: title,
-    //     timers: []
-    //   }];
-
-    // });
+    
     dispatch({
       type: CONST.REDUCER_ACTION_TYPES.HIDE_CREATE_TIMER_SECTION_INPUT_POPUP
     });
   }
 
-  const showSectionCloseBtnClickWarning = (targetIdx) => {
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.UPDATE_TO_BE_DELETED_SECTION_IDX,
-      payload: {
-        targetIdx
-      }
-    });
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.SHOW_CONFIRM_POPUP_FOR_DELETE_SECTION
-    });
-  }
-  
   const onCreateTimerClickOutsidePopup = () => {
     dispatch({
       type: CONST.REDUCER_ACTION_TYPES.HIDE_CREATE_TIMER_SECTION_INPUT_POPUP
@@ -163,12 +111,12 @@ function App() {
   const onYesDeleteSectionClick = () => {
 
     onSecionCloseBtnClick(myAppState.toBeDeleteSectionIdx);
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.UPDATE_TO_BE_DELETED_SECTION_IDX,
-      payload: {
-        targetIdx: null
-      }
-    });
+    // dispatch({
+    //   type: CONST.REDUCER_ACTION_TYPES.UPDATE_TO_BE_DELETED_SECTION_IDX,
+    //   payload: {
+    //     targetIdx: null
+    //   }
+    // });
 
     dispatch({
       type: CONST.REDUCER_ACTION_TYPES.HIDE_CONFIRM_POPUP_FOR_DELETE_SECTION
@@ -190,9 +138,6 @@ function App() {
   const onYesClick = () =>  {
     // delete everything that is added 
     // hide the alertPopup
-    // setSections(() => {
-    //   return [];
-    // });
     dispatch({
       type: CONST.REDUCER_ACTION_TYPES.DELETE_ALL_SECTIONS
     });
@@ -266,6 +211,16 @@ function App() {
             onNo={() => { onNoClick() }}
           />}
 
+          {myAppState.shouldShowConfirmPopupForDeleteSection && <AlertPopup 
+            width={CONST.RESET_CONFIRMATION_WIDTH}
+            height={CONST.RESET_CONFIRMATION_HEIGHT}
+            color="#ffffff"
+            titleColor="#F24B6A"
+            message={CONST.RESET_CONFIRMATION_MESSAGE}
+            onYes={() => { onYesDeleteSectionClick() }}
+            onNo={() => { onNoDeleteSectionClick() }}
+          />}
+
           {myAppState.shouldShowCreateTimerSectionInputPopup && <InputPopup 
             message={CONST.CREATE_TIMER_TITLE}
             color="#ffffff"
@@ -277,17 +232,6 @@ function App() {
             placeholder="Title"
           />}
           
-
-          {myAppState.shouldShowConfirmPopupForDeleteSection && <AlertPopup 
-            width={CONST.RESET_CONFIRMATION_WIDTH}
-            height={CONST.RESET_CONFIRMATION_HEIGHT}
-            color="#ffffff"
-            titleColor="#F24B6A"
-            message={CONST.RESET_CONFIRMATION_MESSAGE}
-            onYes={() => { onYesDeleteSectionClick() }}
-            onNo={() => { onNoDeleteSectionClick() }}
-          />}
-
           {myAppState.shouldShowPopUpForEnteringMinutes && <InputPopup 
             message={CONST.CREATE_TIMER_MINUTES_MESSAGE}
             color="#ffffff"
@@ -302,10 +246,7 @@ function App() {
           {myAppState.sections && myAppState.sections.map((timerData, idx) => {
               return <Section  
                       timerData={timerData} 
-                      onCloseClick={() => {showSectionCloseBtnClickWarning(idx)}}
                       sectionId={idx}
-                      onAddTimerClick={() => {}}
-                      showEnterTimerPopUp={(sectionId) => {showEnterTimerPopUp(sectionId)}}
                     />
             })
           }
