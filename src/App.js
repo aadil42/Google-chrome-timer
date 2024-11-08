@@ -20,7 +20,6 @@ function App() {
   
   const {myAppState, dispatch} = useContext(AppContext);
 
-  const [shouldShowCreateTimerInputPopup, setShouldShowCreateTimerInputPopup] = useState(false);
   const [shouldShowConfirmSectionDeletePopup, setShouldShowConfirmSectionDeletePopup] = useState(false);
   const [sectionToBeDeletedId, setSectionToBeDeletedId] = useState(null);
   const previouselyAddedSections = localStorageGetData(CONST.LOCAL_STORAGE_SECTIONS_KEY);
@@ -109,7 +108,10 @@ function App() {
 
   const showSectionCloseBtnClickWarning = (targetIdx) => {
     setSectionToBeDeletedId(targetIdx);
-    setShouldShowConfirmSectionDeletePopup(true);
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.SHOW_CONFIRM_POPUP_FOR_DELETE_SECTION
+    });
+    // setShouldShowConfirmSectionDeletePopup(true);
   }
   
   const onCreateTimerClickOutsidePopup = () => {
@@ -128,11 +130,17 @@ function App() {
   const onYesDeleteSectionClick = () => {
     onSecionCloseBtnClick(sectionToBeDeletedId);
     setSectionToBeDeletedId(null);
-    setShouldShowConfirmSectionDeletePopup(false);
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.HIDE_CONFIRM_POPUP_FOR_DELETE_SECTION
+    });
+    // setShouldShowConfirmSectionDeletePopup(false);
   }
 
   const onNoDeleteSectionClick = () => {
-    setShouldShowConfirmSectionDeletePopup(false);
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.HIDE_CONFIRM_POPUP_FOR_DELETE_SECTION
+    });
+    // setShouldShowConfirmSectionDeletePopup(false);
   }
 
   const onNoClick = () => {
@@ -232,7 +240,7 @@ function App() {
           />}
           
 
-          {shouldShowConfirmSectionDeletePopup && <AlertPopup 
+          {myAppState.shouldShowConfirmPopupForDeleteSection && <AlertPopup 
             width={CONST.RESET_CONFIRMATION_WIDTH}
             height={CONST.RESET_CONFIRMATION_HEIGHT}
             color="#ffffff"

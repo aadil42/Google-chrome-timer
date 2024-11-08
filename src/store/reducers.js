@@ -30,6 +30,20 @@ const AppContextReducer = (state, action) => {
             shouldShowCreateTimerSectionInputPopup: false
         }
     }
+
+    if(action.type === REDUCER_ACTION_TYPES.SHOW_CONFIRM_POPUP_FOR_DELETE_SECTION) {
+        return {
+            ...state,
+            shouldShowConfirmPopupForDeleteSection: true
+        }
+    }
+    
+    if(action.type === REDUCER_ACTION_TYPES.HIDE_CONFIRM_POPUP_FOR_DELETE_SECTION) {
+        return {
+            ...state,
+            shouldShowConfirmPopupForDeleteSection: false
+        }
+    }
 }
 
 export default AppContextReducer;
