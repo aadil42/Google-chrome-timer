@@ -10,13 +10,24 @@ const CurrentRunningTimer = () => {
     const completeTimerHandler = () => {
 
     console.log('yey timer complete', myAppState.selectedSectionIdx);
+    // dispatch({
+    //     type: CONST.REDUCER_ACTION_TYPES.ADD_SECTION,
+    //     payload: {
+    //         targetIdx: myAppState.selectedSectionIdx
+    //     }
+    // });
 
     dispatch({
-        type: CONST.REDUCER_ACTION_TYPES.ADD_SECTION,
+        type: CONST.REDUCER_ACTION_TYPES.ADD_TIMER_IN_SECTION,
         payload: {
-            targetIdx: myAppState.selectedSectionIdx
+          targetIdx: myAppState.selectedSectionIdx
         }
-        });
+    });
+
+    dispatch({
+        type: CONST.REDUCER_ACTION_TYPES.SET_IS_TIMER_RUNNING_FALSE
+    });
+    
     }
 
     return <Countdown 

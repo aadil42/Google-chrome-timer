@@ -15,6 +15,7 @@ const Section = ({timerData, sectionId}) => {
     const {myAppState, dispatch} = useContext(AppContext);
 
     const plusBtnClickHandler = (targetIdx) => {
+      console.log(targetIdx, 'this should be set as selected idx');
         dispatch({
             type: CONST.REDUCER_ACTION_TYPES.UPDATE_SELECTED_SECTION_IDX,
             payload: {

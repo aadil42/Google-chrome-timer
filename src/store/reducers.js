@@ -128,6 +128,13 @@ const AppContextReducer = (state, action) => {
             })
         }
     }
+
+    if(action.type === REDUCER_ACTION_TYPES.SET_IS_TIMER_RUNNING_FALSE) {
+        return {
+            ...state,
+            isTimerRunning: false
+        }
+    }
 }
 
 export default AppContextReducer;

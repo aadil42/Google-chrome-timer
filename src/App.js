@@ -5,12 +5,14 @@ import CONST from "./CONST";
 import Model from "./components/Model";
 import GradientDiv from "./components/GradientDiv";
 import MainTitle from "./components/MainTitle";
-import PrimaryBtn from "./components/PrimaryBtn";
-import HorizontalBar from "./components/HorizontalBar";
-import AlertPopup from "./components/AlertPopup";
-import InputPopup from "./components/InputPopup";
 import {localStorageGetData, localStorageSetData} from "./libs/localStorage";
 import Section from "./components/Section";
+import SectionCreateInputPopup from "./components/SectionCreateInputPopup";
+import EnterMinutesPopup from "./components/EnterMinutesPopup";
+import DeleteAllSectionPopup from "./components/DeleteAllSectionPopup";
+import DeleteOneSection from "./components/DeleteOneSection";
+import HorizontalBarForCreateDeleteSections from "./components/HorizontalBarForCreateAndDeleteSections";
+
 import CurrentRunningTimer from "./components/CurrentRunningTimer";
 
 import "./App.css";
@@ -33,118 +35,7 @@ function App() {
 
   const onTimerComplete = () => {
 
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.ADD_TIMER_IN_SECTION,
-      payload: {
-        targetIdx: myAppState.selectedSectionIdx
-      }
-    });
-  }
 
-  const onResetClick = () => {
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.SHOW_POPUP_FOR_DELETING_ALL_SECTIONS
-    });
-  }
-
-  const onSecionCloseBtnClick = (targetIdx) => {
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.DELETE_SECTION,
-      payload: {
-        targetIdx
-      }
-    });
-  }
-
-  const onCreateClick = () => {
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.SHOW_CREATE_TIMER_SECTION_INPUT_POPUP
-    });
-  }
-
-  const onCreateTimerAddMinutes = (minutes) => {
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.UPDATE_ENTERED_MINUTES,
-      payload: {
-        minutes
-      }
-    });
-
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.HIDE_POPUP_FOR_ENTERING_MINUTES
-    });
-  }
-
-  const onCreateTimerAddClick = (title) => {
-
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.ADD_SECTION,
-      payload: {
-        data: {
-          title,
-          timers: []
-        }
-      }
-    });
-    
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.HIDE_CREATE_TIMER_SECTION_INPUT_POPUP
-    });
-  }
-
-  const onCreateTimerClickOutsidePopup = () => {
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.HIDE_CREATE_TIMER_SECTION_INPUT_POPUP
-    });
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.HIDE_POPUP_FOR_ENTERING_MINUTES
-    });
-  }
-
-  const onCreateTimerClickOutsideAddMinutePopup = () => {
-    console.log("coming here");
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.HIDE_POPUP_FOR_ENTERING_MINUTES
-    })
-  }
-  
-  const onYesDeleteSectionClick = () => {
-
-    onSecionCloseBtnClick(myAppState.toBeDeleteSectionIdx);
-    // dispatch({
-    //   type: CONST.REDUCER_ACTION_TYPES.UPDATE_TO_BE_DELETED_SECTION_IDX,
-    //   payload: {
-    //     targetIdx: null
-    //   }
-    // });
-
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.HIDE_CONFIRM_POPUP_FOR_DELETE_SECTION
-    });
-  }
-
-  const onNoDeleteSectionClick = () => {
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.HIDE_CONFIRM_POPUP_FOR_DELETE_SECTION
-    });
-  }
-
-  const onNoClick = () => {
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.HIDE_POPUP_FOR_DELETING_ALL_SECTIONS
-    });
-  }
-
-  const onYesClick = () =>  {
-    // delete everything that is added 
-    // hide the alertPopup
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.DELETE_ALL_SECTIONS
-    });
-
-    dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.HIDE_POPUP_FOR_DELETING_ALL_SECTIONS
-    });
   }
 
   // stores the latest data for section in localstorage 
@@ -168,13 +59,12 @@ function App() {
         minHeight={CONST.POP_UP_WINDOW_HEIGHT}
         padding="10px"
         >
-
           
           <MainTitle 
           title={CONST.MAIN_TITLE} 
           styles={{
-            color: 'white',          // Text color
-            textAlign: 'center',     // Center the text
+            color: 'white',
+            textAlign: 'center',
             paddingTop: '20px', 
           }}
           />
@@ -183,65 +73,12 @@ function App() {
             <CurrentRunningTimer />
           }
 
-          <HorizontalBar 
-            components={[
-              <PrimaryBtn 
-              title={CONST.PRIMARY_BTN_CREATE_TIMER}
-              clickHandler={onCreateClick}
-              />,
-              <PrimaryBtn
-              title={CONST.PRIMARY_BTN_RESET_TIMER}
-              clickHandler={onResetClick}
-              />
-            ]}
-            styles={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          />
+          <HorizontalBarForCreateDeleteSections />
 
-          {myAppState.shouldShowPopupForDeletingAllSections && <AlertPopup 
-            width={CONST.RESET_CONFIRMATION_WIDTH}
-            height={CONST.RESET_CONFIRMATION_HEIGHT}
-            color="#ffffff"
-            titleColor="#F24B6A"
-            message={CONST.RESET_CONFIRMATION_MESSAGE}
-            onYes={() => { onYesClick() }}
-            onNo={() => { onNoClick() }}
-          />}
-
-          {myAppState.shouldShowConfirmPopupForDeleteSection && <AlertPopup 
-            width={CONST.RESET_CONFIRMATION_WIDTH}
-            height={CONST.RESET_CONFIRMATION_HEIGHT}
-            color="#ffffff"
-            titleColor="#F24B6A"
-            message={CONST.RESET_CONFIRMATION_MESSAGE}
-            onYes={() => { onYesDeleteSectionClick() }}
-            onNo={() => { onNoDeleteSectionClick() }}
-          />}
-
-          {myAppState.shouldShowCreateTimerSectionInputPopup && <InputPopup 
-            message={CONST.CREATE_TIMER_TITLE}
-            color="#ffffff"
-            titleColor="#F24B6A"
-            width={CONST.CREATE_TIMER_TITLE_WIDTH}
-            height={CONST.CREATE_TIMER_TITLE_HEIGHT}
-            addTimerClickHandler={onCreateTimerAddClick}
-            hideInputPopup={onCreateTimerClickOutsidePopup}
-            placeholder="Title"
-          />}
-          
-          {myAppState.shouldShowPopUpForEnteringMinutes && <InputPopup 
-            message={CONST.CREATE_TIMER_MINUTES_MESSAGE}
-            color="#ffffff"
-            titleColor="#F24B6A"
-            width={CONST.CREATE_TIMER_MINUTES_MESSAGE_WIDTH}
-            height={CONST.CREATE_TIMER_MINUTES_MESSAGE_HEIGHT}
-            addTimerClickHandler={onCreateTimerAddMinutes}
-            hideInputPopup={onCreateTimerClickOutsideAddMinutePopup}
-            placeholder="Minutes"
-          />}
+          {myAppState.shouldShowPopupForDeletingAllSections && <DeleteAllSectionPopup />}
+          {myAppState.shouldShowConfirmPopupForDeleteSection && <DeleteOneSection />}
+          {myAppState.shouldShowCreateTimerSectionInputPopup && <SectionCreateInputPopup />}
+          {myAppState.shouldShowPopUpForEnteringMinutes && <EnterMinutesPopup />}
 
           {myAppState.sections && myAppState.sections.map((timerData, idx) => {
               return <Section  
