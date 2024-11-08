@@ -16,7 +16,20 @@ const AppContextReducer = (state, action) => {
                 shouldShowPopupForDeletingAllSections: false
             }
     }
+    
+    if(action.type === REDUCER_ACTION_TYPES.SHOW_CREATE_TIMER_SECTION_INPUT_POPUP) {
+        return {
+            ...state,
+            shouldShowCreateTimerSectionInputPopup: true
+        }
+    }
 
+    if(action.type === REDUCER_ACTION_TYPES.HIDE_CREATE_TIMER_SECTION_INPUT_POPUP) {
+        return {
+            ...state,
+            shouldShowCreateTimerSectionInputPopup: false
+        }
+    }
 }
 
 export default AppContextReducer;

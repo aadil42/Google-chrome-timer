@@ -74,7 +74,10 @@ function App() {
   }
 
   const onCreateClick = () => {
-    setShouldShowCreateTimerInputPopup(true);
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.SHOW_CREATE_TIMER_SECTION_INPUT_POPUP
+    });
+    // setShouldShowCreateTimerInputPopup(true);
   }
 
   const onCreateTimerAddMinutes = (minutes) => {
@@ -98,8 +101,10 @@ function App() {
       }];
 
     });
-
-    setShouldShowCreateTimerInputPopup(false);
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.HIDE_CREATE_TIMER_SECTION_INPUT_POPUP
+    });
+    // setShouldShowCreateTimerInputPopup(false);
   }
 
   const showSectionCloseBtnClickWarning = (targetIdx) => {
@@ -108,7 +113,10 @@ function App() {
   }
   
   const onCreateTimerClickOutsidePopup = () => {
-    setShouldShowCreateTimerInputPopup(false);
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.HIDE_CREATE_TIMER_SECTION_INPUT_POPUP
+    });
+    // setShouldShowCreateTimerInputPopup(false);
     // setShouldShowEnterTimerMinutesPopup(false); // start here
   }
 
@@ -212,7 +220,7 @@ function App() {
             onNo={() => { onNoClick() }}
           />}
 
-          {shouldShowCreateTimerInputPopup && <InputPopup 
+          {myAppState.shouldShowCreateTimerSectionInputPopup && <InputPopup 
             message={CONST.CREATE_TIMER_TITLE}
             color="#ffffff"
             titleColor="#F24B6A"
