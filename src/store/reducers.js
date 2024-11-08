@@ -87,7 +87,7 @@ const AppContextReducer = (state, action) => {
         }
     }
 
-    if(action.type === REDUCER_ACTION_TYPES.ADD_SECTION) {
+    if(action.type === REDUCER_ACTION_TYPES.ADD_TIMER_IN_SECTION) {
         return {
             ...state,
             sections: state.sections.map((section, idx) => {
@@ -98,6 +98,27 @@ const AppContextReducer = (state, action) => {
             })
         }
     }
+
+    if(action.type === REDUCER_ACTION_TYPES.DELETE_ALL_SECTIONS) {
+        return {
+            ...state,
+            sections: []
+        };
+    }
+
+    if(action.type === REDUCER_ACTION_TYPES.ADD_SECTION) {
+        if(state.sections) {
+            return {
+                ...state,
+                sections: state.sections.push(action.payload.data)
+            }
+        }
+        return {
+            ...state,
+            sections: [action.payload.data]
+        }
+    }
+
 }
 
 export default AppContextReducer;

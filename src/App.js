@@ -48,7 +48,7 @@ function App() {
   const onTimerComplete = () => {
 
     dispatch({
-      type: CONST.REDUCER_ACTION_TYPES.ADD_SECTION,
+      type: CONST.REDUCER_ACTION_TYPES.ADD_TIMER_IN_SECTION,
       payload: {
         targetIdx: myAppState.selectedSectionIdx
       }
@@ -101,21 +101,32 @@ function App() {
   }
 
   const onCreateTimerAddClick = (title) => {
-    setSections((preSections) => {
 
-      if(preSections) {
-        return [...preSections, {
-          title: title,
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.ADD_SECTION,
+      payload: {
+        data: {
+          title,
           timers: []
-        }];
+        }
       }
-
-      return [{
-        title: title,
-        timers: []
-      }];
-
     });
+
+    // setSections((preSections) => {
+
+    //   if(preSections) {
+    //     return [...preSections, {
+    //       title: title,
+    //       timers: []
+    //     }];
+    //   }
+
+    //   return [{
+    //     title: title,
+    //     timers: []
+    //   }];
+
+    // });
     dispatch({
       type: CONST.REDUCER_ACTION_TYPES.HIDE_CREATE_TIMER_SECTION_INPUT_POPUP
     });
@@ -179,9 +190,13 @@ function App() {
   const onYesClick = () =>  {
     // delete everything that is added 
     // hide the alertPopup
-    setSections(() => {
-      return [];
+    // setSections(() => {
+    //   return [];
+    // });
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.DELETE_ALL_SECTIONS
     });
+
     dispatch({
       type: CONST.REDUCER_ACTION_TYPES.HIDE_POPUP_FOR_DELETING_ALL_SECTIONS
     });
