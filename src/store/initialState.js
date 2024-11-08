@@ -10,7 +10,8 @@ const initialState = {
     toBeDeleteSectionIdx: CONST.TO_BE_DELETED_SECTION_IDX,
     enteredMinutes: CONST.ENTERED_MINUTES,
     currentTimerEndTime: localStorageGetData(CONST.CURRENT_TIMER_KEY),
-    isTimerRunning: localStorageGetData(CONST.CURRENT_TIMER_KEY) > Date.now()
+    isTimerRunning: localStorageGetData(CONST.CURRENT_TIMER_KEY) > Date.now(),
+    sections: localStorageGetData(CONST.LOCAL_STORAGE_SECTIONS_KEY),
 };
 
 export default initialState;

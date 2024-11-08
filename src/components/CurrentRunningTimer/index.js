@@ -2,13 +2,26 @@
 import { useContext } from "react";
 import Countdown from "react-countdown"
 import AppContext from "../../store/context";
+import CONST from "../../CONST";
 
-const CurrentRunningTimer = ({onTimerComplete}) => {
-    const myContext = useContext(AppContext);
+const CurrentRunningTimer = () => {
+    const {myAppState, dispatch} = useContext(AppContext);
+
+    const completeTimerHandler = () => {
+
+    console.log('yey timer complete', myAppState.selectedSectionIdx);
+
+    dispatch({
+        type: CONST.REDUCER_ACTION_TYPES.ADD_SECTION,
+        payload: {
+            targetIdx: myAppState.selectedSectionIdx
+        }
+        });
+    }
 
     return <Countdown 
-            date={myContext.currentTimerEndTime} 
-            onComplete={onTimerComplete}
+            date={myAppState.currentTimerEndTime} 
+            onComplete={completeTimerHandler}
            />;
 }
 

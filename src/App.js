@@ -18,10 +18,10 @@ import "./App.css";
 function App() {
   
   const {myAppState, dispatch} = useContext(AppContext);
-  const previouselyAddedSections = localStorageGetData(CONST.LOCAL_STORAGE_SECTIONS_KEY);
-  const [sections, setSections] = useState(previouselyAddedSections);
+  const [sections, setSections] = useState(myAppState.sections);
   
   const showEnterTimerPopUp = (targetIdx) => {
+    console.log("added adding timer here so its id is", targetIdx);
     dispatch({
       type: CONST.REDUCER_ACTION_TYPES.UPDATE_SELECTED_SECTION_IDX,
       payload: {
@@ -46,14 +46,23 @@ function App() {
   }
 
   const onTimerComplete = () => {
-    setSections((sections) => {
-      return sections.map((section, idx) => {
-        if(idx === myAppState.selectedSectionIdx) {
-          section.timers.push(myAppState.enteredMinutes);
-        }
-        return section;
-      });
+
+    dispatch({
+      type: CONST.REDUCER_ACTION_TYPES.ADD_SECTION,
+      payload: {
+        targetIdx: myAppState.selectedSectionIdx
+      }
     });
+
+    // setSections((sections) => {
+    //   return sections.map((section, idx) => {
+    //     if(idx === myAppState.selectedSectionIdx) {
+    //       section.timers.push(myAppState.enteredMinutes);
+    //     }
+    //     return section;
+    //   });
+    // });
+
   }
 
   const onResetClick = () => {
@@ -211,9 +220,7 @@ function App() {
           />
 
           {myAppState.isTimerRunning &&           
-            <CurrentRunningTimer 
-            onTimerComplete={onTimerComplete}
-            />
+            <CurrentRunningTimer />
           }
 
           <HorizontalBar 
@@ -277,7 +284,7 @@ function App() {
             placeholder="Minutes"
           />}
 
-          {sections && sections.map((timerData, idx) => {
+          {myAppState.sections && myAppState.sections.map((timerData, idx) => {
               return <Section  
                       timerData={timerData} 
                       onCloseClick={() => {showSectionCloseBtnClickWarning(idx)}}
