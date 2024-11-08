@@ -108,7 +108,8 @@ function App() {
   }
   
   const onCreateTimerClickOutsidePopup = () => {
-    setShouldShowEnterTimerMinutesPopup(false);
+    setShouldShowCreateTimerInputPopup(false);
+    // setShouldShowEnterTimerMinutesPopup(false); // start here
   }
 
   const onCreateTimerClickOutsideAddMinutePopup = () => {
