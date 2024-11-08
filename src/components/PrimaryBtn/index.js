@@ -1,6 +1,13 @@
+
+import { useContext } from "react";
+import AppContext from "../../store/context";
+
 import Button from "../Button";
 
 const PrimaryBtn = ({title, clickHandler}) => {
+    
+    const appState = useContext(AppContext);
+
     return (
         <Button 
         clickHandler={clickHandler}

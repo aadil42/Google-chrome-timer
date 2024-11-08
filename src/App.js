@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { AppContextProvider } from "./store/context";
 
 import CONST from "./CONST";
 import Model from "./components/Model";
@@ -146,7 +147,9 @@ function App() {
   }, [enteredMinutes]);
 
   return (
+    
     <div className="App">
+      <AppContextProvider>
        <GradientDiv 
        gradientColors={[CONST.POP_UP_WINDOW_PRIMARY_BG, CONST.POP_UP_WINDOW_SECONDARY_BG]}
        >
@@ -248,6 +251,7 @@ function App() {
 
         </Model>
        </GradientDiv>
+       </AppContextProvider>
     </div>
   );
 }
