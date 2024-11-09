@@ -118,7 +118,8 @@ const Section = ({timerData, sectionId}) => {
                             display: 'flex',
                             justifyContent: 'left',
                             alignItems: 'center',
-                            maxWidth: '80%'
+                            maxWidth: '80%',
+                            columnGap: '7px' 
                         }}
                     />,
                     <Tertiary
