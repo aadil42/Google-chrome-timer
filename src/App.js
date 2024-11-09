@@ -46,8 +46,8 @@ function App() {
 
   // // adds minutes timer
   useEffect(() => {
-    onAddTimerInSection(myAppState.enteredMinutes);
-  }, [myAppState.enteredMinutes]);
+    onAddTimerInSection(myAppState.currentTimerDetials.enteredMinutes);
+  }, [myAppState.currentTimerDetials]);
 
   return (
     

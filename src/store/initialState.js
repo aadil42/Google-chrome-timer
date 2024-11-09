@@ -8,7 +8,9 @@ const initialState = {
     shouldShowPopUpForEnteringMinutes: CONST.SHOULD_SHOW_POPUP_FOR_ENTERING_MINUTES,
     selectedSectionIdx: CONST.SELECTED_SECTION_IDX,
     toBeDeleteSectionIdx: CONST.TO_BE_DELETED_SECTION_IDX,
-    enteredMinutes: CONST.ENTERED_MINUTES,
+    currentTimerDetials: {
+        enteredMinutes: CONST.ENTERED_MINUTES,
+    },
     currentTimerEndTime: localStorageGetData(CONST.CURRENT_TIMER_KEY),
     isTimerRunning: localStorageGetData(CONST.CURRENT_TIMER_KEY) > Date.now(),
     sections: localStorageGetData(CONST.LOCAL_STORAGE_SECTIONS_KEY),

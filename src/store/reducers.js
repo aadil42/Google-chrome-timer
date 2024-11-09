@@ -61,7 +61,10 @@ const AppContextReducer = (state, action) => {
     if(action.type === REDUCER_ACTION_TYPES.UPDATE_ENTERED_MINUTES) {
         return {
             ...state, 
-            enteredMinutes: action.payload.minutes
+            currentTimerDetials: {
+                ...state.currentTimerDetials,
+                enteredMinutes: action.payload.minutes
+            }
         }
     };
 
@@ -92,7 +95,7 @@ const AppContextReducer = (state, action) => {
             ...state,
             sections: state.sections.map((section, idx) => {
                 if(idx === action.payload.targetIdx) {
-                    section.timers.push(state.enteredMinutes);
+                    section.timers.push(state.currentTimerDetials.enteredMinutes);
                 }
                 return section;
             })

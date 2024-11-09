@@ -107,6 +107,7 @@ const Section = ({timerData, sectionId}) => {
                     />,
                     <HorizontalBar 
                         components={timerData.timers.map((timer, clockIdx) => {
+                            console.log(timer);
                             return   <p  
                                         onClick={() => clockIconCloseBtnHandler(sectionId, clockIdx)}
                                         style={styles.clockIconContainer}>
