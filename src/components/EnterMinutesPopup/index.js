@@ -3,10 +3,11 @@ import InputPopup from "../InputPopup";
 import CONST from "../../CONST";
 import AppContext from "../../store/context";
 import { useContext } from "react";
+import localStorageSetData from "../../libs/localStorage/localStorageSetData";
 
 const EnterMinutesPopup = () => {
 
-    const {dispatch} = useContext(AppContext);
+    const {myAppState ,dispatch} = useContext(AppContext);
     
     const onCreateTimerAddMinutes = (minutes) => {
         dispatch({
@@ -15,10 +16,13 @@ const EnterMinutesPopup = () => {
             minutes
           }
         });
-    
+        
         dispatch({
           type: CONST.REDUCER_ACTION_TYPES.HIDE_POPUP_FOR_ENTERING_MINUTES
         });
+
+        // store data locally so it persists.
+        localStorageSetData(CONST.SELECTED_SECTION_IDX_KEY, myAppState.selectedSectionIdx);
       }
     
       const onCreateTimerClickOutsideAddMinutePopup = () => {

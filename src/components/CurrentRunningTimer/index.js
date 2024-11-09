@@ -10,7 +10,7 @@ const CurrentRunningTimer = () => {
 
     const completeTimerHandler = () => {
 
-    console.log('yey timer complete', myAppState.selectedSectionIdx);
+    // console.log('yey timer complete', myAppState.selectedSectionIdx);
     // dispatch({
     //     type: CONST.REDUCER_ACTION_TYPES.ADD_SECTION,
     //     payload: {
@@ -18,6 +18,7 @@ const CurrentRunningTimer = () => {
     //     }
     // });
 
+    console.log(myAppState, "this run on complete time");
     dispatch({
         type: CONST.REDUCER_ACTION_TYPES.ADD_TIMER_IN_SECTION,
         payload: {
@@ -28,6 +29,8 @@ const CurrentRunningTimer = () => {
     dispatch({
         type: CONST.REDUCER_ACTION_TYPES.SET_IS_TIMER_RUNNING_FALSE
     });
+
+
     }
 
     

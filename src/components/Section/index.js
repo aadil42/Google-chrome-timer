@@ -1,7 +1,7 @@
 
 import { useContext } from "react";
 import AppContext from "../../store/context";
-
+import { localStorageSetData } from "../../libs/localStorage";
 
 import HorizontalBar from "../HorizontalBar";
 import PrimaryHeader from "../PrimaryHeader";
@@ -23,7 +23,10 @@ const Section = ({timerData, sectionId}) => {
             payload: {
               targetIdx
             }
-          });
+        });
+        
+        localStorageSetData(CONST.SELECTED_SECTION_IDX_KEY, targetIdx);
+
         dispatch({
             type: CONST.REDUCER_ACTION_TYPES.SHOW_POPUP_FOR_ENTERING_MINUTES
         });
