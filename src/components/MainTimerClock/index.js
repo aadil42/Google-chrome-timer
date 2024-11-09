@@ -1,5 +1,8 @@
-const MainTimerClock = ({ minutes, seconds, completed }) => {
-    
+import PrimaryHeader from "../PrimaryHeader";
+import AppContext from "../../store/context";
+import { useContext } from "react";
+
+const MainTimerClock = ({ title, minutes, seconds }) => {
     const style = {
         display: 'flex',
         justifyContent: 'center',
@@ -16,9 +19,13 @@ const MainTimerClock = ({ minutes, seconds, completed }) => {
 
     return (
         <div style={style}>
-            <span>{minutes} : {seconds}</span>
+            <h1 style={{ marginRight: '10px', fontSize: '1.2rem', color: '#333' }}>{title}</h1>
+            <span>
+                {minutes} : {seconds}
+            </span>
         </div>
     );
 };
+
 
 export default MainTimerClock;

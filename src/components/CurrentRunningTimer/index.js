@@ -28,15 +28,14 @@ const CurrentRunningTimer = () => {
     dispatch({
         type: CONST.REDUCER_ACTION_TYPES.SET_IS_TIMER_RUNNING_FALSE
     });
-    
-    
     }
 
     return <Countdown 
-            date={myAppState.currentTimerEndTime} 
-            onComplete={completeTimerHandler}
-            renderer={MainTimerClock}
-           />;
+                date={myAppState.currentTimerEndTime} 
+                onComplete={completeTimerHandler}
+                renderer={(obj) => {return MainTimerClock({...obj, title: "mytitle"})}}
+                props={{title: "this is title"}}
+            />;
 }
 
 export default CurrentRunningTimer
