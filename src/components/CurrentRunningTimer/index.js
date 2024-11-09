@@ -3,6 +3,7 @@ import { useContext } from "react";
 import Countdown from "react-countdown"
 import AppContext from "../../store/context";
 import CONST from "../../CONST";
+import MainTimerClock from "../MainTimerClock";
 
 const CurrentRunningTimer = () => {
     const {myAppState, dispatch} = useContext(AppContext);
@@ -34,6 +35,7 @@ const CurrentRunningTimer = () => {
     return <Countdown 
             date={myAppState.currentTimerEndTime} 
             onComplete={completeTimerHandler}
+            renderer={MainTimerClock}
            />;
 }
 
