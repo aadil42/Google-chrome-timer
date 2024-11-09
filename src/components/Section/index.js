@@ -39,29 +39,63 @@ const Section = ({timerData, sectionId}) => {
         });
     }
 
+    const clockIconCloseBtnHandler = (sectionIdx, clockIdx) => {
+      console.log("haha we happend", clockIdx);
+
+      dispatch({
+        type: CONST.REDUCER_ACTION_TYPES.SHOW_CLOCK_ICON_DELETE_CONFIRMATION
+      });
+
+      dispatch({
+        type: CONST.REDUCER_ACTION_TYPES.UPDATE_SELECTED_CLOCK_IDX,
+        payload: {
+          targetIdx: clockIdx
+        }
+      });
+
+      // dispatch({
+      //   type: CONST.REDUCER_ACTION_TYPES.UPDATE_TO_BE_DELETED_SECTION_IDX,
+      //   payload: {
+      //     targetIdx: sectionIdx
+      //   }
+      // });
+
+      dispatch({
+        type: CONST.REDUCER_ACTION_TYPES.UPDATE_SELECTED_SECTION_IDX,
+        payload: {
+          targetIdx: sectionIdx
+        }
+      });
+    }
+
     const styles = {
         clockIconContainer: {
           position: 'relative',
           display: 'inline-block', // Keeps container size to icon
+          cursor: 'pointer',
         },
         clockIcon: {
-          fontSize: '3rem', // Adjust icon size
+          fontSize: '1.5rem', // Adjust icon size
         },
         clockTimer: {
           position: 'absolute',
-          top: 0,
-          right: 0,
-          fontSize: '1.5rem', // Adjust timer size
-          backgroundColor: 'rgba(0, 0, 0, 0.5)', // Optional background
+          top: '-4px',
+          right: '-6px',
+          fontSize: '.75rem', // Adjust timer size
+          backgroundColor: CONST.POP_UP_WINDOW_PRIMARY_BG,
           color: 'white', // Optional text color
           padding: '0.2rem', // Optional padding around timer
           borderRadius: '50%', // Optional circular background
-        },
+          minHeight: '20px',
+          minWidth: '20px',
+          },
       };
       
     return (
         <ContainerWithCloseBtn
         onClose={() => {closeBtnClickHandler(sectionId)}}
+        width="30px"
+        height="30px"
         >
             <HorizontalBar 
                 components={[
@@ -72,11 +106,13 @@ const Section = ({timerData, sectionId}) => {
                     }}
                     />,
                     <HorizontalBar 
-                        components={timerData.timers.map((timer) => {
-                            return <p className={styles.clockIconContainer}>
-                                    <span className={styles.clockIcon}>🕒</span>
-                                    <span className={styles.clockTimer}>{timer}</span>
-                                   </p>;
+                        components={timerData.timers.map((timer, clockIdx) => {
+                            return   <p  
+                                        onClick={() => clockIconCloseBtnHandler(sectionId, clockIdx)}
+                                        style={styles.clockIconContainer}>
+                                        <span style={styles.clockIcon}>🕒</span>
+                                        <span style={styles.clockTimer}>{timer}</span>
+                                      </p>
                         })}
                         styles={{
                             display: 'flex',

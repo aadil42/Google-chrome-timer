@@ -28,6 +28,7 @@ const CurrentRunningTimer = () => {
         type: CONST.REDUCER_ACTION_TYPES.SET_IS_TIMER_RUNNING_FALSE
     });
     
+    
     }
 
     return <Countdown 

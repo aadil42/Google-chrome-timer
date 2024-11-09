@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import QuaternaryBtn from "../QuaternaryBtn";
 
-function ContainerWithCloseBtn({children, onClose}) {
+function ContainerWithCloseBtn({children, onClose, height, width}) {
   const [isHovered, setIsHovered] = useState(false);
   
   const containerStyle = {
@@ -9,8 +9,8 @@ function ContainerWithCloseBtn({children, onClose}) {
   };
 
   const buttonStyle = {
-    width: '30px',
-    height: '30px',
+    width: height,
+    height: width,
     position: 'absolute',
     top: '-10px',
     right: '20px',

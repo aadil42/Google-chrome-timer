@@ -12,6 +12,8 @@ const initialState = {
     currentTimerEndTime: localStorageGetData(CONST.CURRENT_TIMER_KEY),
     isTimerRunning: localStorageGetData(CONST.CURRENT_TIMER_KEY) > Date.now(),
     sections: localStorageGetData(CONST.LOCAL_STORAGE_SECTIONS_KEY),
+    shouldShowClockIconDeleteConfirmaiton: CONST.SHOULD_SHOW_CLOCK_ICON_DELEETE_CONFIRMATION,
+    toBeDeletedClockIdx: CONST.TO_BE_DELETED_CLOCK_IDX
 };
 
 export default initialState;

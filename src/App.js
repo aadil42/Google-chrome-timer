@@ -12,6 +12,7 @@ import EnterMinutesPopup from "./components/EnterMinutesPopup";
 import DeleteAllSectionPopup from "./components/DeleteAllSectionPopup";
 import DeleteOneSection from "./components/DeleteOneSection";
 import HorizontalBarForCreateDeleteSections from "./components/HorizontalBarForCreateAndDeleteSections";
+import DeleteClockIconPopup from "./components/DeleteClockIconPopup";
 
 import CurrentRunningTimer from "./components/CurrentRunningTimer";
 
@@ -74,7 +75,8 @@ function App() {
           }
 
           <HorizontalBarForCreateDeleteSections />
-
+          
+          {myAppState.shouldShowClockIconDeleteConfirmaiton && <DeleteClockIconPopup />}
           {myAppState.shouldShowPopupForDeletingAllSections && <DeleteAllSectionPopup />}
           {myAppState.shouldShowConfirmPopupForDeleteSection && <DeleteOneSection />}
           {myAppState.shouldShowCreateTimerSectionInputPopup && <SectionCreateInputPopup />}

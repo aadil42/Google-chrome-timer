@@ -135,6 +135,69 @@ const AppContextReducer = (state, action) => {
             isTimerRunning: false
         }
     }
+
+    if(action.type === REDUCER_ACTION_TYPES.REMOVE_CLOCK_FROM_SECTION) {
+        console.log('trying to delete...');
+        return {
+            ...state,
+            sections: state.sections.map((section, idx) => {
+                if(idx === action.payload.sectionIdx) {
+                    const filteredTimers = section.timers.filter((clock, clockIdx) => {
+                        if(clockIdx === action.payload.clockIdx) return false;
+                        return true;
+                    });
+
+                    return {
+                        title: section.title,
+                        timers: filteredTimers
+                    };
+                }
+                return section;
+            })
+        }
+    }
+
+    if(action.type === REDUCER_ACTION_TYPES.SHOW_CLOCK_ICON_DELETE_CONFIRMATION) {
+        return {
+            ...state,
+            shouldShowClockIconDeleteConfirmaiton: true
+        }
+    }
+    
+    if(action.type === REDUCER_ACTION_TYPES.HIDE_CLOCK_ICON_DELETE_CONFIRMATION) {
+        return {
+            ...state,
+            shouldShowClockIconDeleteConfirmaiton: false
+        }
+    }
+    
+    if(action.type === REDUCER_ACTION_TYPES.UPDATE_SELECTED_CLOCK_IDX) {
+        console.log("are we updating clock idx?", action.payload.targetIdx);
+        return {
+            ...state,
+            toBeDeletedClockIdx: action.payload.targetIdx
+        }
+    }
+
+    // if(action.type === REDUCER_ACTION_TYPES.DELETE_CLOCK_ICON) {
+    //     return {
+    //         ...state,
+    //         sections: sections.map((section, idx) => {
+    //             if(idx === state.selectedSectionIdx) {
+    //                 const filteredTimers = section.timers.filter((timer, timerIdx) => {
+    //                     if(timerIdx === state.toBeDeletedClockIdx) return false;
+    //                     return true;
+    //                 });
+
+    //                 return {
+    //                     title: section.title,
+    //                     timers: filteredTimers
+    //                 }
+    //             }
+    //             return section;
+    //         })
+    //     }
+    // }
 }
 
 export default AppContextReducer;
