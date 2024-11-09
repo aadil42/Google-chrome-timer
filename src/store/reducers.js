@@ -182,6 +182,12 @@ const AppContextReducer = (state, action) => {
         }
     }
 
+    if(action.type === REDUCER_ACTION_TYPES.UPDATE_TITLE_FOR_CURRENT_TIMER) {
+        return {
+            ...state,
+            currentRunningTimerTitle: action.payload.title
+        }
+    }
     // if(action.type === REDUCER_ACTION_TYPES.DELETE_CLOCK_ICON) {
     //     return {
     //         ...state,

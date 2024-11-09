@@ -16,7 +16,7 @@ const MainTimerClock = ({ title, minutes, seconds }) => {
         fontWeight: 'bold',
         color: '#333',
     };
-
+    
     return (
         <div style={style}>
             <h1 style={{ marginRight: '10px', fontSize: '1.2rem', color: '#333' }}>{title}</h1>

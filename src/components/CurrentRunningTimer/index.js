@@ -30,10 +30,14 @@ const CurrentRunningTimer = () => {
     });
     }
 
+    
     return <Countdown 
                 date={myAppState.currentTimerEndTime} 
                 onComplete={completeTimerHandler}
-                renderer={(obj) => {return MainTimerClock({...obj, title: "mytitle"})}}
+                renderer={(obj) => {
+                    console.log(myAppState, "this is from countdown");
+                    return MainTimerClock({...obj, title: myAppState.currentRunningTimerTitle})
+                }}
                 props={{title: "this is title"}}
             />;
 }

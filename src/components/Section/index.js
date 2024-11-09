@@ -16,14 +16,23 @@ const Section = ({timerData, sectionId}) => {
 
     const plusBtnClickHandler = (targetIdx) => {
       console.log(targetIdx, 'this should be set as selected idx');
+      if(myAppState.isTimerRunning) return;
+      
         dispatch({
             type: CONST.REDUCER_ACTION_TYPES.UPDATE_SELECTED_SECTION_IDX,
             payload: {
               targetIdx
             }
           });
-          dispatch({
+        dispatch({
             type: CONST.REDUCER_ACTION_TYPES.SHOW_POPUP_FOR_ENTERING_MINUTES
+        });
+
+        dispatch({
+          type: CONST.REDUCER_ACTION_TYPES.UPDATE_TITLE_FOR_CURRENT_TIMER,
+          payload: {
+            title: timerData.title
+          }
         });
     }
     
