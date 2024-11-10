@@ -1,3 +1,4 @@
+    /*global chrome*/
 import { useEffect, useContext } from "react";
 import AppContext from "./store/context";
 

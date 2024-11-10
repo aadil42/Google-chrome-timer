@@ -1,0 +1,21 @@
+{
+    "manifest_version": 3,
+    "name": "Google Chrome Timer",
+    "version": "1.0",
+    "description": "A timer for google chrome.",
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "index.html"
+    },
+    "icons": {
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    },
+    "permissions": ["storage", "notifications"],
+    "author": "aadil42"
+  }
+  

@@ -4,6 +4,7 @@ import CONST from "../../CONST";
 import AppContext from "../../store/context";
 import { useContext } from "react";
 import localStorageSetData from "../../libs/localStorage/localStorageSetData";
+import setListenerForBackgroundScript from "../../libs/backgroundUtils/setListenerForBackgroundScript";
 
 const EnterMinutesPopup = () => {
 
@@ -23,6 +24,9 @@ const EnterMinutesPopup = () => {
 
         // store data locally so it persists.
         localStorageSetData(CONST.SELECTED_SECTION_IDX_KEY, myAppState.selectedSectionIdx);
+
+
+        setListenerForBackgroundScript();
       }
     
       const onCreateTimerClickOutsideAddMinutePopup = () => {
