@@ -3,6 +3,9 @@
   "name": "Google Chrome Timer",
   "version": "1.0",
   "description": "A timer for google chrome.",
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
     "default_popup": "index.html"
   },
@@ -12,6 +15,6 @@
     "48": "icon48.png",
     "128": "icon128.png"
   },
-  "permissions": ["storage"],
+  "permissions": ["storage", "notifications"],
   "author": "aadil42"
 }
